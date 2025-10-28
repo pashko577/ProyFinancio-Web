@@ -1,0 +1,149 @@
+/* Encabezado */
+header {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.1em;
+}
+
+/* Menú de navegación */
+nav {
+    background-color: #0055aa;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding: 15px 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #ffcc00;
+}
+
+/* Diseño responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+    
+    /* Ajustes generales */
+    body {
+        font-size: 15px;
+        margin: 0;
+        padding: 0;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    header nav ul li {
+        display: block;
+    }
+
+    /* 🔹 Sección Hero */
+    .hero {
+        padding: 50px 20px;
+        text-align: center;
+    }
+
+    .hero h2 {
+        font-size: 1.8em;
+    }
+
+    .hero p {
+        font-size: 1em;
+        max-width: 100%;
+    }
+
+    .boton-hero {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    /* 🔹 Bloque de razones (tres columnas → una debajo de otra) */
+    .razones {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .razon {
+        width: 90%;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* 🔹 Sección de planes */
+    .planes-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .plan {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+
+    /* 🔹 Imagen de inicio */
+    .imagen-inicio {
+        width: 100%;
+        height: auto;
+        margin-top: 20px;
+    }
+
+    /* 🔹 Footer */
+    footer {
+        text-align: center;
+        font-size: 0.9em;
+        padding: 20px;
+    }
+
+    .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-section {
+    margin: 10px 0;
+  }
+
+  .redes-icons a {
+    display: inline-block;
+    margin: 5px 8px;
+  }
+  /*FORMULARIO CONTACTO*/
+  .contacto-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .info-contacto, .form-contacto {
+    width: 90%;
+    text-align: center;
+  }
+
+  .form-contacto {
+    text-align: left;
+  }
+}
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
