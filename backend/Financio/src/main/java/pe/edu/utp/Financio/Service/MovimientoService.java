@@ -26,4 +26,11 @@ public class MovimientoService {
     public void eliminar(int id) {
         repo.deleteById(id);
     }
+
+
+    //eliminar despues
+
+    public List<Movimiento> listarTodos() {
+        return repo.findAll();
+    }
 }

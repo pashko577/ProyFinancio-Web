@@ -33,4 +33,5 @@ public class Usuario {
     private Timestamp fechaRegistro;
 
     // Getters y setters (o usa Lombok @Getter/@Setter)
+
 }
