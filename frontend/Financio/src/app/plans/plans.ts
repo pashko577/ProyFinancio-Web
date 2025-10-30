@@ -1,16 +1,33 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-plans',
-  standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './plans.html',
   styleUrl: './plans.css',
 })
 export class Plans {
-  plans = [
-    { id: 1, name: 'Basico', price: 'Gratis', features: ['Control de gastos', 'Resumen mensual'] },
-    { id: 2, name: 'Pro', price: 'S/29/mes', features: ['Exportar CSV', 'Reportes avanzados', 'Soporte básico'] },
-    { id: 3, name: 'Premium', price: 'S/79/mes', features: ['Dashboard avanzado', 'Integraciones', 'Soporte prioritario'] }
-  ];
+  mostrarModal = false;
+  planSeleccionado = '';
+  nombre = '';
+  correo = '';
+  telefono = '';
+  enviado = false;
+
+  abrirFormulario(plan: string) {
+    this.planSeleccionado = plan;
+    this.mostrarModal = true;
+    this.enviado = false;
+  }
+
+  cerrarModal() {
+    this.mostrarModal = false;
+  }
+
+  enviarFormulario() {
+    this.enviado = true;
+    setTimeout(() => this.cerrarModal(), 2000);
+  }
 }

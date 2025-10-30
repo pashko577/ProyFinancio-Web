@@ -8,11 +8,12 @@ import { Login} from './Auth/login/login';
 import { Dashboard } from './dashboard/dashboard';
 import { Plans } from './plans/plans';
 
+
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'services', component: Services },
-  { path: 'plans', component: Plans },
   { path: 'contact', component: Contact },
   { path: 'login', component: Login },
-  { path: 'dashboard', component: Dashboard }
+  { path: 'dashboard', component: Dashboard },
+  { path: 'plans', component: Plans }
 ];

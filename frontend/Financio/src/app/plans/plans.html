@@ -1,45 +1,75 @@
 <section id="planes">
-        <h2>Nuestros Planes</h2>
-        <p>Elige el plan que mejor se adapte a las necesidades de tu negocio y empieza a controlar tus finanzas con Financio.</p>
+  <h2>Nuestros Planes</h2>
+  <p>Elige el plan que mejor se adapte a las necesidades de tu negocio y empieza a controlar tus finanzas con Financio.</p>
 
-        <div class="contenedor-planes">
-            <div class="plan">
-                <h3>💼 Plan Básico</h3>
-                <p class="precio">S/ 29<span>/mes</span></p>
-                <ul>
-                    <li>✔ Registro de ingresos y egresos</li>
-                    <li>✔ Reportes mensuales en PDF</li>
-                    <li>✔ Categorías personalizadas</li>
-                    <li>❌ Sin dashboard</li>
-                    <li>❌ Sin alertas inteligentes</li>
-                </ul>
-                <a href="#" class="boton-plan">Elegir Plan</a>
-            </div>
+  <div class="contenedor-planes">
+    <!-- PLAN BÁSICO -->
+    <div class="plan">
+      <h3>💼 Plan Básico</h3>
+      <p class="precio">S/ 29<span>/mes</span></p>
+      <ul>
+        <li>✔ Registro de ingresos y egresos</li>
+        <li>✔ Reportes mensuales en PDF</li>
+        <li>✔ Categorías personalizadas</li>
+        <li>✔ Acceso al módulo de <strong>Caja</strong></li>
+        <li>❌ Sin análisis de finanzas</li>
+        <li>❌ Sin metas financieras</li>
+        <li>❌ Sin exportación de datos</li>
+      </ul>
+      <button class="boton-plan" (click)="abrirFormulario('Básico')">Elegir Plan</button>
+    </div>
 
-            <div class="plan destacado">
-                <h3>🚀 Plan Emprendedor</h3>
-                <p class="precio">S/ 59<span>/mes</span></p>
-                <ul>
-                    <li>✔ Todo del Plan Básico</li>
-                    <li>✔ Dashboard con indicadores</li>
-                    <li>✔ Alertas inteligentes</li>
-                    <li>✔ Reportes trimestrales y anuales</li>
-                    <li>✔ Soporte prioritario</li>
-                </ul>
-                <a href="#" class="boton-plan">Elegir Plan</a>
-            </div>
+    <!-- PLAN EMPRENDEDOR -->
+    <div class="plan destacado">
+      <h3>🚀 Plan Emprendedor</h3>
+      <p class="precio">S/ 59<span>/mes</span></p>
+      <ul>
+        <li>✔ Todo lo del Plan Básico</li>
+        <li>✔ Dashboard con indicadores</li>
+        <li>✔ Alertas inteligentes</li>
+        <li>✔ Análisis de finanzas automatizado</li>
+        <li>✔ Configuración de metas financieras</li>
+        <li>✔ Exportar datos a PDF y Excel</li>
+        <li>✔ Soporte prioritario</li>
+      </ul>
+      <button class="boton-plan" (click)="abrirFormulario('Emprendedor')">Elegir Plan</button>
+    </div>
 
-            <div class="plan">
-                <h3>🏢 Plan Empresarial</h3>
-                <p class="precio">S/ 99<span>/mes</span></p>
-                <ul>
-                    <li>✔ Todo del Plan Emprendedor</li>
-                    <li>✔ Usuarios ilimitados</li>
-                    <li>✔ Respaldo automático en la nube</li>
-                    <li>✔ Personalización de reportes</li>
-                    <li>✔ Integración con Excel</li>
-                </ul>
-                <a href="#" class="boton-plan">Elegir Plan</a>
-            </div>
-        </div>
-    </section>
+    <!-- PLAN EMPRESARIAL -->
+    <div class="plan">
+      <h3>🏢 Plan Empresarial</h3>
+      <p class="precio">S/ 99<span>/mes</span></p>
+      <ul>
+        <li>✔ Todo lo del Plan Emprendedor</li>
+        <li>✔ Usuarios ilimitados y roles personalizados</li>
+        <li>✔ Integración avanzada con Excel y Power BI</li>
+        <li>✔ Respaldo automático en la nube</li>
+        <li>✔ Reportes personalizables</li>
+        <li>✔ Acceso a informes comparativos</li>
+        <li>✔ Soporte empresarial 24/7</li>
+      </ul>
+      <button class="boton-plan" (click)="abrirFormulario('Empresarial')">Elegir Plan</button>
+    </div>
+  </div>
+</section>
+
+<!-- 🧾 MODAL DE FORMULARIO -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-contenido">
+    <span class="cerrar" (click)="cerrarModal()">&times;</span>
+
+    <h3>Suscribirse al Plan {{ planSeleccionado }}</h3>
+
+    <form (ngSubmit)="enviarFormulario()" *ngIf="!enviado">
+      <label>Nombre completo:</label>
+      <input type="text" [(ngModel)]="nombre" name="nombre" required>
+      <label>Correo electrónico:</label>
+      <input type="email" [(ngModel)]="correo" name="correo" required>
+      <label>Teléfono:</label>
+      <input type="tel" [(ngModel)]="telefono" name="telefono">
+      <button type="submit">Enviar</button>
+    </form>
+
+    <p *ngIf="enviado">✅ ¡Gracias {{ nombre }}! Tu solicitud ha sido registrada.</p>
+  </div>
+</div>
