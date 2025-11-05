@@ -17,8 +17,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario registrar(Usuario usuario) {
-        String hash = BCrypt.hashpw(usuario.getContrasenaHash(), BCrypt.gensalt());
-        usuario.setContrasenaHash(hash);
+        String hash = BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt());
+        usuario.setContrasena(hash);
         return usuarioRepository.save(usuario);
     }
 
@@ -46,7 +46,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         Optional<Usuario> usuarioOpt = usuarioRepository.findByDni(dni);
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
-            if (BCrypt.checkpw(contrasenaHash, usuario.getContrasenaHash())) {
+            if (BCrypt.checkpw(contrasenaHash, usuario.getContrasena())) {
                 return Optional.of(usuario);
             }
         }

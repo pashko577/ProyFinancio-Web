@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import pe.edu.utp.Financio.entity.Caja;
 import pe.edu.utp.Financio.repository.CajaRepository;
 import pe.edu.utp.Financio.Service.CajaService;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +23,7 @@ public class CajaServiceImpl implements CajaService {
     }
 
     @Override
-    public Optional<Caja> guardarCierre(int idCaja, double cierre) {
+    public Optional<Caja> guardarCierre(int idCaja, BigDecimal cierre) {
         return cajaRepository.findById(idCaja).map(caja -> {
             caja.setCierre(cierre);
             caja.setFechaCierre(LocalDate.now());

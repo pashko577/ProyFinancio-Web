@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-FinancioApplication<Financio>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "pe.edu.utp.Financio.FinancioApplication",
+            "projectName": "Financio",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

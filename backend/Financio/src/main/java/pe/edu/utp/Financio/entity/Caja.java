@@ -1,6 +1,8 @@
 package pe.edu.utp.Financio.entity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -19,10 +21,10 @@ public class Caja {
     private String nombre;
 
     @Column(precision = 15, scale = 2)
-    private Double fondo;
+    private BigDecimal fondo;
 
     @Column(precision = 15, scale = 2)
-    private Double cierre;
+    private BigDecimal cierre;
 
     private LocalDate fechaApertura;
     private LocalDate fechaCierre;

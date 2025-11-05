@@ -26,8 +26,8 @@ public class Usuario {
 
     private String telefono;
 
-    @Column(name = "contrasena_hash", nullable = false)
-    private String contrasenaHash;
+    @Column(name = "contrasena", nullable = false)
+    private String contrasena;
 
     private String rol;
 

@@ -1,0 +1,41 @@
+<div class="container">
+  <h2>Gestión de Usuarios</h2>
+
+  <form #f="ngForm" (ngSubmit)="registrarUsuario(f)" class="form">
+    <input type="text" placeholder="Nombre" [(ngModel)]="nuevoUsuario.nombre" name="nombre" required>
+    <input type="text" placeholder="DNI" [(ngModel)]="nuevoUsuario.dni" name="dni">
+    <input type="email" placeholder="Correo" [(ngModel)]="nuevoUsuario.correo" name="correo" required>
+    <input type="text" placeholder="Teléfono" [(ngModel)]="nuevoUsuario.telefono" name="telefono">
+    <input type="password" placeholder="Contraseña" [(ngModel)]="nuevoUsuario.contrasena" name="contrasena" required>
+
+    <button type="submit">Registrar</button>
+  </form>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+
+  <h3>Lista de Usuarios</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>DNI</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Rol</th>
+        <th>Fecha Registro</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of usuarios">
+        <td>{{ u.id }}</td>
+        <td>{{ u.nombre }}</td>
+        <td>{{ u.dni }}</td>
+        <td>{{ u.correo }}</td>
+        <td>{{ u.telefono }}</td>
+        <td>{{ u.rol }}</td>
+        <td>{{ u.fechaRegistro | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

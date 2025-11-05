@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UsuarioController {
 
     @Autowired
@@ -23,15 +23,16 @@ public class UsuarioController {
     }
 
     @PostMapping("/registrar")
-    public Usuario registrar(@RequestBody Usuario usuario) {
-        return usuarioService.registrar(usuario);
+    public ResponseEntity<Usuario> registrar(@RequestBody Usuario usuario) {
+        Usuario nuevo = usuarioService.registrar(usuario);
+        return ResponseEntity.ok(nuevo);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Usuario credenciales) {
         Optional<Usuario> usuario = usuarioService.login(
                 credenciales.getDni(),
-                credenciales.getContrasenaHash()
+                credenciales.getContrasena()
         );
         return usuario.isPresent()
                 ? ResponseEntity.ok(usuario.get())
