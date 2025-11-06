@@ -1,3 +1,4 @@
+// src/app/services/usuario.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -11,13 +12,17 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) {}
 
-  // ✅ Registrar usuario
   crearUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/registrar`, usuario);
   }
 
-  // 🧩 Obtener usuarios (opcional)
   getUsuarios(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(this.apiUrl);
   }
+
+  // ✅ Nuevo: login
+login(dni: string, contrasena: string) {
+  return this.http.post<Usuario>(`${this.apiUrl}/login`, { dni, contrasena });
+}
+
 }

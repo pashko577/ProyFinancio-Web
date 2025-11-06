@@ -1,0 +1,37 @@
+<div class="container">
+  <h2>Gestión de Movimientos</h2>
+
+  <form (ngSubmit)="registrarMovimiento()" class="form">
+    <select [(ngModel)]="nuevoMovimiento.tipo" name="tipo">
+      <option value="INGRESO">Ingreso</option>
+      <option value="EGRESO">Egreso</option>
+    </select>
+
+    <input type="text" placeholder="Descripción" [(ngModel)]="nuevoMovimiento.descripcion" name="descripcion">
+    <input type="number" placeholder="Monto" [(ngModel)]="nuevoMovimiento.monto" name="monto">
+
+    <button type="submit">Registrar</button>
+  </form>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+
+  <h3>Lista de Movimientos</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tipo</th>
+        <th>Descripción</th>
+        <th>Monto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of movimientos">
+        <td>{{ m.id }}</td>
+        <td>{{ m.tipo }}</td>
+        <td>{{ m.descripcion }}</td>
+        <td>{{ m.monto | currency:'PEN' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

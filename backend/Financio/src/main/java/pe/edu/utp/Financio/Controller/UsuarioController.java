@@ -1,12 +1,14 @@
 package pe.edu.utp.Financio.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.utp.Financio.Service.UsuarioService;
 import pe.edu.utp.Financio.entity.Usuario;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -28,16 +30,30 @@ public class UsuarioController {
         return ResponseEntity.ok(nuevo);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Usuario credenciales) {
-        Optional<Usuario> usuario = usuarioService.login(
-                credenciales.getDni(),
-                credenciales.getContrasena()
-        );
-        return usuario.isPresent()
-                ? ResponseEntity.ok(usuario.get())
-                : ResponseEntity.status(401).body("Credenciales incorrectas");
+@PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody Usuario credenciales) {
+    Optional<Usuario> usuarioOpt = usuarioService.login(
+            credenciales.getDni(),
+            credenciales.getContrasena()
+    );
+
+    if (usuarioOpt.isPresent()) {
+        Usuario usuario = usuarioOpt.get();
+
+        // ✅ Solo enviamos datos seguros al frontend
+        return ResponseEntity.ok(Map.of(
+                "id", usuario.getId(),
+                "nombre", usuario.getNombre(),
+                "dni", usuario.getDni(),
+                "rol", usuario.getRol()
+        ));
+    } else {
+        // ❌ Credenciales incorrectas
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("mensaje", "Credenciales incorrectas"));
     }
+}
+
 
     @GetMapping("/admin")
     public ResponseEntity<?> obtenerAdmin() {

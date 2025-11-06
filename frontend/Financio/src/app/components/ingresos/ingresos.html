@@ -1,0 +1,68 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">💰 Gestión de Ingresos</h2>
+
+  <!-- Formulario de registro -->
+  <div class="card p-3 mb-4">
+    <form (ngSubmit)="registrarIngreso()">
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="Descripción" 
+            [(ngModel)]="nuevoIngreso.descripcion" 
+            name="descripcion" 
+            required
+          >
+        </div>
+        <div class="col-md-6">
+          <input 
+            type="number" 
+            class="form-control" 
+            placeholder="Monto" 
+            [(ngModel)]="nuevoIngreso.monto" 
+            name="monto" 
+            required
+          >
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success w-100">Registrar Ingreso</button>
+    </form>
+
+    <!-- Mensaje de feedback -->
+    <div *ngIf="mensaje" class="alert alert-info mt-2">
+      {{ mensaje }}
+    </div>
+  </div>
+
+  <!-- Tabla de ingresos -->
+  <div class="card p-3">
+    <h5>Lista de Ingresos</h5>
+    <table class="table table-striped mt-2">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Descripción</th>
+          <th>Monto</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of ingresos">
+          <td>{{ i.id }}</td>
+          <td>{{ i.descripcion || '—' }}</td>
+          <td>{{ i.monto | currency:'PEN' }}</td>
+          <td>{{ i.fecha | date:'short' }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-danger" (click)="eliminarIngreso(i.id)">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="ingresos.length === 0" class="text-center text-muted mt-2">
+      No hay ingresos registrados aún.
+    </div>
+  </div>
+</div>

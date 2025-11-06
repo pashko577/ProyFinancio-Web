@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  <h2 class="mb-3 text-center">💸 Registro de Gastos</h2>
+
+  <div class="card p-3 mb-4">
+    <h5>Registrar nuevo gasto</h5>
+    <form (ngSubmit)="registrarGasto()">
+      <div class="row mb-2">
+        <div class="col-md-4">
+          <label>Monto:</label>
+          <input type="number" [(ngModel)]="nuevoGasto.monto" name="monto" class="form-control" required>
+        </div>
+        <div class="col-md-8">
+          <label>Descripción:</label>
+          <input type="text" [(ngModel)]="nuevoGasto.descripcion" name="descripcion" class="form-control">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-danger w-100">Registrar Gasto</button>
+    </form>
+  </div>
+
+  <div class="card p-3">
+    <h5>Lista de gastos registrados</h5>
+    <table class="table table-striped mt-2">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Monto</th>
+          <th>Descripción</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let g of gastos">
+          <td>{{ g.id }}</td>
+          <td>S/. {{ g.monto }}</td>
+          <td>{{ g.descripcion || '—' }}</td>
+          <td>{{ g.fecha | date: 'short' }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-danger" (click)="eliminarGasto(g.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="gastos.length === 0" class="text-center text-muted">
+      <p>No hay gastos registrados aún.</p>
+    </div>
+  </div>
+</div>

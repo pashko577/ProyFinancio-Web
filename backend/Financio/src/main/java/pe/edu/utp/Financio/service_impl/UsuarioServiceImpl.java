@@ -6,6 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import pe.edu.utp.Financio.entity.Usuario;
 import pe.edu.utp.Financio.repository.UsuarioRepository;
 import pe.edu.utp.Financio.Service.UsuarioService;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario registrar(Usuario usuario) {
+        // 🔒 Encriptar la contraseña antes de guardar
         String hash = BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt());
         usuario.setContrasena(hash);
         return usuarioRepository.save(usuario);
@@ -41,17 +43,18 @@ public class UsuarioServiceImpl implements UsuarioService {
         return false;
     }
 
-    @Override
-    public Optional<Usuario> login(String dni, String contrasenaHash) {
-        Optional<Usuario> usuarioOpt = usuarioRepository.findByDni(dni);
-        if (usuarioOpt.isPresent()) {
-            Usuario usuario = usuarioOpt.get();
-            if (BCrypt.checkpw(contrasenaHash, usuario.getContrasena())) {
-                return Optional.of(usuario);
-            }
+ @Override
+public Optional<Usuario> login(String dniOCorreo, String contrasena) {
+    Optional<Usuario> usuarioOpt = usuarioRepository.findByDniOrCorreo(dniOCorreo, dniOCorreo);
+    if (usuarioOpt.isPresent()) {
+        Usuario usuario = usuarioOpt.get();
+        if (BCrypt.checkpw(contrasena, usuario.getContrasena())) {
+            return Optional.of(usuario);
         }
-        return Optional.empty();
     }
+    return Optional.empty();
+}
+
 
     @Override
     public Optional<Usuario> obtenerAdmin() {

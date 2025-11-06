@@ -10,4 +10,8 @@ public interface MovimientoService {
     List<Movimiento> listarPorUsuario(int idUsuario, boolean esAdmin);
     boolean eliminarMovimiento(int idMovimiento);
     Optional<Movimiento> buscarPorId(int idMovimiento);
+List<Movimiento> listarTodosMovimientos();
+
+
+
 }
