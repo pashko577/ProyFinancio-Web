@@ -1,16 +1,44 @@
 <header>
-  <nav>
-    <a routerLink="/" routerLinkActive="active">Inicio</a>
-    <a routerLink="/services" routerLinkActive="active">Servicios</a>
-    <a routerLink="/contact" routerLinkActive="active">Contacto</a>
-    <a routerLink="/login" routerLinkActive="active">Login</a>
-    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-    <a routerLink="/plans" routerLinkActive="active">Planes</a>
-    <a *ngIf="!authService.estaAutenticado()" routerLink="/" routerLinkActive="active"></a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <a class="navbar-brand fw-bold" routerLink="/">Financio</a>
 
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <!-- Links de navegación a la izquierda -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/services" routerLinkActive="active">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/plans" routerLinkActive="active">Planes</a>
+        </li>
+      </ul>
+
+      <!-- Botones a la derecha -->
+      <div class="d-flex">
+        <a routerLink="/login" class="btn btn-outline-light me-2">Iniciar Sesión</a>
+        <a routerLink="/register" class="btn btn-primary">Registrar</a>
+      </div>
+
+    </div>
   </nav>
 </header>
 
-<main>
+<main class="container mt-4">
   <router-outlet></router-outlet>
 </main>
+
+
+<footer>
+  <app-footer></app-footer>
+</footer>

@@ -1,33 +1,85 @@
-<section id="home">
-    <!-- Bloque principal o "hero" -->
-    <div class="hero">
-        <h2>Controla tus finanzas con facilidad</h2>
-        <p>Financio te ayuda a gestionar ingresos, egresos, deudas y reportes desde un solo lugar. Diseñado especialmente para micro y pequeñas empresas.</p>
-       <!-- Bloque principal o "hero" <a routerLink="/plans" class="boton-hero">Ver Planes</a> --> 
+<section id="home" class="py-5">
+
+    <!-- Imagen -->
+    <div id="financioCarousel" class="carousel slide container" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-inner rounded shadow">
+
+            <div class="carousel-item active">
+                <img src="https://plus.unsplash.com/premium_photo-1681487769650-a0c3fbaed85a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmluYW56YXN8ZW58MHx8MHx8fDA%3D&fm=jpg&q=60&w=3000"
+                    class="d-block w-100 img-fluid" alt="Control Financiero">
+            </div>
+
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c" class="d-block w-100 img-fluid"
+                    alt="Reportes Financieros">
+            </div>
+
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1526378722484-c85b6ea4589d" class="d-block w-100 img-fluid"
+                    alt="Crecimiento Empresarial">
+            </div>
+
+        </div>
+
+        <!-- Botones de navegación -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#financioCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <button class="carousel-control-next" type="button" data-bs-target="#financioCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+    
+    <br>
+    <br>
+    <!-- Hero -->
+    <div class="container text-center mb-5">
+        <h2 class="fw-bold">Controla tus finanzas con facilidad</h2>
+        <p class="text-muted mx-auto" style="max-width: 700px;">
+            Financio te ayuda a gestionar ingresos, egresos, deudas y reportes desde un solo lugar.
+            Diseñado especialmente para micro y pequeñas empresas.
+        </p>
+        <!-- Botón (puedes activar routerLink) -->
+        <!-- <a routerLink="/plans" class="btn btn-primary btn-lg">Ver Planes</a> -->
     </div>
 
-    <!-- Subbloque: Qué es Financio -->
-    <div class="intro">
-        <h3>¿Qué es Financio?</h3>
-        <p>Financio es un sistema web que permite a emprendedores y microempresas llevar el control total de sus finanzas. Desde el registro de ingresos y egresos hasta la generación de reportes automáticos, todo en una sola plataforma fácil de usar.</p>
+    <!-- ¿Qué es Financio? -->
+    <div class="container text-center mb-5">
+        <h3 class="fw-semibold">¿Qué es Financio?</h3>
+        <p class="text-muted mx-auto" style="max-width: 800px;">
+            Financio es un sistema web que permite a emprendedores y microempresas llevar el control total
+            de sus finanzas. Desde el registro de ingresos y egresos hasta la generación de reportes automáticos,
+            todo en una sola plataforma fácil de usar.
+        </p>
     </div>
 
-    <!-- Subbloque: Por qué elegirnos -->
-    <div class="razones">
-        <div class="razon">
-            <h4>🔒 Seguridad</h4>
-            <p>Tus datos financieros están protegidos con respaldo automático y cifrado seguro.</p>
-        </div>
-        <div class="razon">
-            <h4>⚙️ Eficiencia</h4>
-            <p>Automatiza reportes y reduce el tiempo de gestión contable.</p>
-        </div>
-        <div class="razon">
-            <h4>📈 Crecimiento</h4>
-            <p>Toma decisiones inteligentes basadas en indicadores financieros claros y precisos.</p>
+    <!-- Razones -->
+    <div class="container mb-5">
+        <div class="row text-center g-4">
+            <div class="col-md-4">
+                <div class="p-4 border rounded shadow-sm border-dark">
+                    <h4>🔒 Seguridad</h4>
+                    <p class="text-muted">Tus datos financieros están protegidos con respaldo automático y cifrado
+                        seguro.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 border rounded shadow-sm border-dark">
+                    <h4>⚙️ Eficiencia</h4>
+                    <p class="text-muted">Automatiza reportes y reduce el tiempo de gestión contable.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 border rounded shadow-sm border-dark">
+                    <h4>📈 Crecimiento</h4>
+                    <p class="text-muted">Toma decisiones inteligentes basadas en indicadores financieros claros y
+                        precisos.</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Subbloque: Imagen (opcional) -->
-    <img src="https://plus.unsplash.com/premium_photo-1681487769650-a0c3fbaed85a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmluYW56YXN8ZW58MHx8MHx8fDA%3D&fm=jpg&q=60&w=3000" alt="Gestión Financiera Financio" class="imagen-inicio">
+
+
 </section>

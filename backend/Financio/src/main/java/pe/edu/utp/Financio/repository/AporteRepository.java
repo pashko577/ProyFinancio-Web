@@ -8,4 +8,4 @@ import pe.edu.utp.Financio.entity_mongo.Aporte;
 
 @Repository
 public interface AporteRepository extends MongoRepository<Aporte, String> {
-}
+} 

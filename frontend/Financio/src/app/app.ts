@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { AuthService } from './services/AuthService';
+import { Footer } from './Shared/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink,Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
