@@ -1,26 +1,26 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+  import { Injectable } from '@angular/core';
+  import { HttpClient } from '@angular/common/http';
+  import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class GastoService {
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GastoService {
 
- private apiUrl = 'http://localhost:8080/api/gastos';
+  private apiUrl = 'http://localhost:8080/api/gastos';
 
 
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
-listarPorUsuario(idUsuario: number) {
-  return this.http.get<any[]>(`${this.apiUrl}/usuario/${idUsuario}`);
-}
+  listarPorUsuario(idUsuario: number, admin: boolean = false): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/usuario/${idUsuario}?admin=${admin}`);
+    }
 
-  registrarGasto(gasto: any) {
-    return this.http.post<any>(`${this.apiUrl}/registrar`, gasto);
+    registrarGasto(gasto: any): Observable<any> {
+      return this.http.post(`${this.apiUrl}/registrar`, gasto);
+    }
+    
+    eliminarGasto(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
   }
-
-  eliminarGasto(id: number) {
-    return this.http.delete(`${this.apiUrl}/${id}`);
-  }
-}

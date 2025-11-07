@@ -4,29 +4,33 @@
   <!-- Formulario de registro -->
   <div class="card p-4 mb-4 form-gasto">
     <h5>Registro de Gastos</h5>
-    <form (ngSubmit)="registrarGasto()">
+    <form (ngSubmit)="registrarGasto();
+      $event.preventDefault()" novalidate>
 
       <!-- Monto -->
       <div class="mb-3">
         <label class="form-label fw-semibold">Monto</label>
-        <input type="number" class="form-control" placeholder="Ej: 250.00" [(ngModel)]="nuevoGasto.monto" name="monto" required>
+        <input type="number" class="form-control" 
+        placeholder="Ej: 250.00" [(ngModel)]="nuevoGasto.monto" name="monto" required>
       </div>
 
       <!-- Categoría -->
       <div class="mb-3">
         <label class="form-label fw-semibold">Categoría</label>
-        <select class="form-select" [(ngModel)]="nuevoGasto.categoria" name="categoria" required>
+        <select class="form-select" 
+        [(ngModel)]="nuevoGasto.categoria" name="categoria" required>
           <option value="" disabled selected>Seleccione categoría</option>
-          <option *ngFor="let c of categoriasGastos" [value]="c.id">{{ c.nombre }}</option>
+          <option *ngFor="let c of categorias" [value]="c.id">{{ c.nombre }}</option>
         </select>
       </div>
 
       <!-- Método de Pago -->
       <div class="mb-3">
         <label class="form-label fw-semibold">Método de Pago</label>
-        <select class="form-select" [(ngModel)]="nuevoGasto.metodoPago" name="metodoPago" required>
+        <select class="form-select" 
+        [(ngModel)]="nuevoGasto.metodoPago" name="metodoPago" required>
           <option value="" disabled selected>Seleccione método de pago</option>
-          <option *ngFor="let m of metodosPago" [value]="m.id">{{ m.nombre }}</option>
+          <option *ngFor="let m of metodosPago" [value]="m.id">{{ m.tipo }}</option>
         </select>
       </div>
 
@@ -61,7 +65,6 @@
           <th>Método de Pago</th>
           <th>Descripción</th>
           <th>Monto</th>
-          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>

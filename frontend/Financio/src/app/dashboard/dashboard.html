@@ -1,5 +1,44 @@
-<section class="dashboard">
-  <h2>Panel de Control</h2>
-  <p>Bienvenido al panel donde puedes ver tus reportes financieros.</p>
-</section>
+<div class="container mt-4">
 
+  <h2 class="text-center">📊 Panel Administrativo</h2>
+
+  <div class="row text-center mt-4">
+    <div class="col-md-4">
+      <div class="card p-3 border-0 shadow-sm">
+        <h4 class="text-success">{{ totalIngresos | currency:'PEN' }}</h4>
+        <p>Total Ingresos</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-3 border-0 shadow-sm">
+        <h4 class="text-danger">{{ totalGastos | currency:'PEN' }}</h4>
+        <p>Total Gastos</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-3 border-0 shadow-sm">
+        <h4 class="text-primary">{{ balance | currency:'PEN' }}</h4>
+        <p>Balance General</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm p-3">
+        <h5 class="text-center">Ingresos vs Gastos</h5>
+        <canvas id="chartIG"></canvas>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm p-3">
+        <h5 class="text-center">Gastos por Categoría</h5>
+        <canvas id="chartCategorias"></canvas>
+      </div>
+    </div>
+  </div>
+
+</div>

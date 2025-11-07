@@ -49,10 +49,14 @@ public class MovimientoServiceImpl implements MovimientoService {
 
     @Override
     public List<Movimiento> listarPorUsuario(int idUsuario, boolean esAdmin) {
-        return esAdmin
-                ? movimientoRepository.findByTipo("INGRESO")
-                : movimientoRepository.findByUsuario_IdAndTipo(idUsuario, "INGRESO");
+       // Si es administrador, ve todos los movimientos de todos los usuarios
+    if (esAdmin) {
+        return movimientoRepository.findAll();
     }
+
+    // Si es usuario normal, solo los movimientos suyos
+    return movimientoRepository.findByUsuario_Id(idUsuario);
+}
 
     @Override
     public boolean eliminarMovimiento(int idMovimiento) {

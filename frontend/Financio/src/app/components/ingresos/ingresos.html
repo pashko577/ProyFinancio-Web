@@ -1,28 +1,62 @@
 <div class="container mt-4">
-  <h2 class="text-center mb-4">💰 Gestión de Ingresos</h2> <!-- Formulario de registro -->
+  <h2 class="text-center mb-4">💰 Gestión de Ingresos</h2>
+
+  <!-- Formulario de registro -->
   <div class="card p-4 mb-4 form-ingreso">
     <h5>Registro de Ingresos</h5>
-  <form (ngSubmit)="registrarIngreso(); $event.preventDefault()" novalidate>
-      <div class="mb-3"> <label class="form-label fw-semibold">Monto</label> <input type="number" class="form-control"
-          placeholder="Ej: 250.00" [(ngModel)]="nuevoIngreso.monto" name="monto" required> </div> <!-- Categoría -->
-      <div class="mb-3"> <label class="form-label fw-semibold">Categoría</label> <select class="form-select"
+    <form (ngSubmit)="registrarIngreso(); 
+    $event.preventDefault()" novalidate>
+
+     <!-- Monto -->
+      <div class="mb-3">
+         <label class="form-label fw-semibold">Monto</label> 
+        <input type="number" class="form-control"
+          placeholder="Ej: 250.00" [(ngModel)]="nuevoIngreso.monto" name="monto" required> 
+        </div> 
+          
+          <!-- Categoría -->
+      <div class="mb-3"> 
+        <label class="form-label fw-semibold">Categoría</label>
+         <select class="form-select"
           [(ngModel)]="nuevoIngreso.categoria" name="categoria" required>
           <option value="" disabled selected>Seleccione categoría</option>
           <option *ngFor="let c of categorias" [value]="c.id">{{ c.nombre }}</option>
-        </select> </div> <!-- Método de Pago -->
-      <div class="mb-3"> <label class="form-label fw-semibold">Método de Pago</label> <select class="form-select"
+        </select>
+       </div>
+
+        <!-- Método de Pago -->
+      <div class="mb-3"> 
+        <label class="form-label fw-semibold">Método de Pago</label> 
+        <select class="form-select"
           [(ngModel)]="nuevoIngreso.metodoPago" name="metodoPago" required>
           <option value="" disabled selected>Seleccione método de pago</option>
           <option *ngFor="let m of metodosPago" [value]="m.id">{{ m.tipo }}</option>
+        </select>
+       </div>
+       
+       <!-- Descripción -->
+      <div class="mb-3"> 
+        <label class="form-label fw-semibold">Descripción</label>
+         <textarea
+          class="form-control descripcion-input" 
+          placeholder="Ej: Pago por servicio, venta del día, etc..."
+          [(ngModel)]="nuevoIngreso.descripcion" 
+          name="descripcion" 
+          rows="4" 
+          required></textarea> 
+        </div>
 
-        </select> </div> <!-- Descripción -->
-      <div class="mb-3"> <label class="form-label fw-semibold">Descripción</label> <textarea
-          class="form-control descripcion-input" placeholder="Ej: Pago por servicio, venta del día, etc..."
-          [(ngModel)]="nuevoIngreso.descripcion" name="descripcion" rows="4" required></textarea> </div> <button
-        type="submit" class="btn btn-success w-100">Registrar Ingreso</button>
-    </form> <!-- Mensaje -->
-    <div *ngIf="mensaje" class="alert alert-info mt-3 text-center"> {{ mensaje }} </div>
-  </div> <!-- Tabla de ingresos -->
+         <button
+        type="submit" class="btn btn-success w-100">Registrar Ingreso
+      </button>
+    </form> 
+    
+    <!-- Mensaje -->
+    <div *ngIf="mensaje" class="alert alert-info mt-3 text-center"> 
+      {{ mensaje }} </div>
+  </div>
+  
+  <!-- Tabla de ingresos -->
   <div class="card p-3">
     <h5>Lista de Ingresos</h5>
     <table class="table table-striped mt-2">
@@ -42,10 +76,14 @@
           <td>{{ i.metodoPago }}</td>
           <td>{{ i.descripcion || '—' }}</td>
           <td>{{ i.monto | currency:'PEN' }}</td>
-          <td> <button class="btn btn-sm btn-outline-danger" (click)="eliminarIngreso(i.id)">🗑️</button> </td>
+          <td> 
+            <button class="btn btn-sm btn-outline-danger" (click)="eliminarIngreso(i.id)">🗑️</button> 
+          </td>
         </tr>
       </tbody>
     </table>
-    <div *ngIf="ingresos.length === 0" class="text-center text-muted mt-2"> No hay ingresos registrados aún. </div>
+    <div *ngIf="ingresos.length === 0" class="text-center text-muted mt-2"> 
+      No hay ingresos registrados aún. 
+    </div>
   </div>
 </div>

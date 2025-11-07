@@ -1,103 +1,154 @@
 import { Component, OnInit } from '@angular/core';
-import { GastoService } from '../../services/gasto.service';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/AuthService';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { GastoService } from '../../services/gasto.service';
+import { AuthService } from '../../services/AuthService';
+import { CategoriasService } from '../../services/categorias.service';
+import { MetodoPagoService } from '../../services/metodopago.service';
 
 @Component({
-  
-standalone:true,
-  imports:[CommonModule,FormsModule, HttpClientModule],
   selector: 'app-gastos',
+  standalone: true,
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './gastos.html',
   styleUrls: ['./gastos.css']
-})export class Gastos implements OnInit {
-  gastos: any[] = [];
-  mensaje: string | null = null;   // ✅ PROPIEDAD FALTANTE
+})
+export class Gastos implements OnInit {
 
-  nuevoGasto = {
-    usuario: { id: 1 },
-    categoria: { id: 1 },
-    metodoPago: { id: 1 },
+  gastos: any[] = [];
+  mensaje: string = '';
+
+  categorias: any[] = [];
+  metodosPago: any[] = [];
+
+  nuevoGasto: any = {
+    descripcion: '',
     monto: null,
-    descripcion: ''
+    categoria: null,
+    metodoPago: null
   };
 
-  metodosPago = [
-    { id: '1', nombre: 'Efectivo' },
-    { id: '2', nombre: 'Transferencia bancaria' },
-    { id: '3', nombre: 'Depósito' },
-    { id: '4', nombre: 'Tarjeta de crédito' },
-    { id: '5', nombre: 'Tarjeta de débito' },
-    { id: '6', nombre: 'Yape / Plin' },
-    { id: '7', nombre: 'Otro' }
-  ];
+  constructor(
+    private gastoService: GastoService,
+    private authService: AuthService,
+    private categoriasService: CategoriasService,
+    private metodoPagoService: MetodoPagoService
+  ) { }
 
-  categoriasGastos= [
-    { id: '7', nombre: 'Alquiler' },
-    { id: '8', nombre: 'Servicios básicos' },
-    { id: '9', nombre: 'Publicidad y marketing' },
-    { id: '10', nombre: 'Sueldos y salarios' },
-    { id: '11', nombre: 'Insumos y materiales' },
-     { id: '12', nombre: 'Transporte' },
-    { id: '13', nombre: 'Otros gastos' }
-  ];
-
-  constructor(private gastoService: GastoService) {}
-
+  // ✅ CARGA PRINCIPAL
   ngOnInit(): void {
-    this.cargarGastos();
+    const usuario = this.authService.obtenerUsuario();
+
+    if (!usuario || !usuario.id) {
+      this.mensaje = '⚠️ No hay usuario autenticado.';
+      return;
+    }
+    // 1) Cargar categorías
+    this.categoriasService.getCategoriasPorUsuarioYTipo(usuario.id, "GASTO").subscribe({
+      next: categorias => {
+        this.categorias = categorias;
+
+        // ✅ Ahora sí cargar métodos una sola vez
+        this.cargarMetodosPago(Number(usuario.id));
+      },
+      error: err => console.error('❌ Error al cargar categorías:', err)
+    });
+
   }
 
-  cargarGastos(): void {
-    const idUsuario = 1;
-    this.gastoService.listarPorUsuario(idUsuario).subscribe({
-      next: data => this.gastos = data,
-      error: err => console.error('Error al listar gastos', err)
+
+  // ✅ Cargar métodos de pago por usuario (OBLIGATORIO)
+  cargarMetodosPago(usuarioId: number): void {
+    this.metodoPagoService.listarMetodosPago(usuarioId).subscribe({
+      next: metodos => {
+        this.metodosPago = metodos;
+
+        // 3) Cargar ingresos SOLO cuando categorías y métodos estén listos
+        this.cargarGastos();
+      },
+      error: err => console.error('❌ Error al cargar métodos de pago:', err)
     });
   }
+  // ✅ Cargar ingresos del usuario
+  cargarGastos(): void {
+    const usuario = this.authService.obtenerUsuario();
 
-  registrarGasto(): void {
-    if (!this.nuevoGasto.monto) {
-      this.mensaje = 'Debe ingresar un monto válido';
+    if (!usuario || !usuario.id) {
+      this.mensaje = '⚠️ No hay usuario autenticado.';
       return;
     }
 
-    this.gastoService.registrarGasto(this.nuevoGasto).subscribe({
-      next: _ => {
-        this.mensaje = '✅ Gasto registrado con éxito';
+    const esAdmin = usuario.rol === 'ADMIN';
 
-        // limpiar formulario
-        this.nuevoGasto.monto = null;
-        this.nuevoGasto.descripcion = '';
-        this.cargarGastos();
+    this.gastoService.listarPorUsuario(usuario.id, esAdmin).subscribe({
+      next: data => {
+        this.gastos = data.map(i => ({
+          ...i,
+          categoria: this.categorias.find(c => c.id === i.categoria?.id)?.nombre,
+          metodoPago: this.metodosPago.find(m => m.id === i.metodoPago?.id)?.tipo || i.metodoPago?.tipo
 
-        // ocultar mensaje automáticamente
-        setTimeout(() => (this.mensaje = null), 3000);
+        }));
+
+        console.log("✅ gastos cargados:", this.gastos);
+      },
+      error: err => console.error('❌ Error al cargar gastos:', err)
+    });
+  }
+
+  // ✅ Registrar ingreso
+  registrarGasto(): void {
+    console.log("✅ Categoria enviada:", this.nuevoGasto.categoria);
+    console.log("✅ MetodoPago enviado:", this.nuevoGasto.metodoPago);
+
+    const usuario = this.authService.obtenerUsuario();
+
+    if (!usuario) {
+      this.mensaje = '⚠️ No hay usuario autenticado.';
+      return;
+    }
+
+    const gasto = {
+      descripcion: this.nuevoGasto.descripcion,
+      monto: this.nuevoGasto.monto,
+      categoria: { id: Number(this.nuevoGasto.categoria) },
+      metodoPago: { id: Number(this.nuevoGasto.metodoPago) },
+      usuario: { id: usuario.id },  // ✅ CORRECTO
+      tipo: 'GASTO'
+    };
+
+    this.gastoService.registrarGasto(gasto).subscribe({
+      next: data => {
+        this.gastos.push({
+          ...data,
+          categoria: this.categorias.find(c => c.id === data.categoria?.id)?.nombre,
+          metodoPago: this.metodosPago.find(m => m.id === data.metodoPago?.id)?.tipo
+
+        });
+
+        this.mensaje = '✅ gasto registrado correctamente.';
+        this.nuevoGasto = { descripcion: '', monto: null, categoria: null, metodoPago: null };
       },
       error: err => {
-        this.mensaje = '❌ Error al registrar gasto';
-        console.error(err);
+        console.error('❌ Error al registrar gasto:', err);
+        this.mensaje = '❌ Error al registrar gasto.';
       }
     });
   }
 
+  // ✅ Eliminar ingreso
   eliminarGasto(id: number): void {
     if (confirm('¿Seguro que deseas eliminar este gasto?')) {
       this.gastoService.eliminarGasto(id).subscribe({
-        next: _ => {
-          this.mensaje = '✅ Gasto eliminado';
-          this.cargarGastos();
-          setTimeout(() => (this.mensaje = null), 3000);
+        next: () => {
+          this.gastos = this.gastos.filter(i => i.id !== id);
+          this.mensaje = '✅ gasto eliminado correctamente.';
         },
         error: err => {
-          this.mensaje = '❌ Error al eliminar gasto';
-          console.error(err);
+          console.error('❌ Error al eliminar gasto:', err);
+          this.mensaje = '❌ Error al eliminar gasto.';
         }
       });
     }
   }
 }
- 

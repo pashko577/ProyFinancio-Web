@@ -10,7 +10,7 @@
       <a routerLink="/caja" routerLinkActive="active">Caja</a>
       <a routerLink="/metas" routerLinkActive="active">Metas</a>
       <a *ngIf="rol === 'ADMIN'" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
-      <a (click)="cerrarSesion()">Cerrar sesión</a>
+      <a (click)="mostrarModal = true">Cerrar sesión</a>
     </nav>
   </aside>
 
@@ -18,4 +18,18 @@
   <main class="content">
     <router-outlet></router-outlet>
   </main>
+</div>
+
+
+<!-- MODAL CONFIRMACIÓN -->
+<div class="modal-overlay" *ngIf="mostrarModal">
+  <div class="modal-box">
+    <h3>¿Deseas cerrar sesión?</h3>
+    <p>Se cerrará tu sesión y volverás a la pantalla de inicio.</p>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="mostrarModal = false">Cancelar</button>
+      <button class="btn-logout" (click)="cerrarSesion()">Sí, cerrar sesión</button>
+    </div>
+  </div>
 </div>

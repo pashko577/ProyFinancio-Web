@@ -1,43 +1,94 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // 👈 Importa esto
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MovimientoService } from '../../services/movimiento.service';
+import { AuthService } from '../../services/AuthService';
+
 @Component({
   selector: 'app-movimientos',
-  imports: [CommonModule,FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './movimientos.html',
-  styleUrl: './movimientos.css',
+  styleUrls: ['./movimientos.css']
 })
 export class Movimientos implements OnInit {
+
   movimientos: any[] = [];
-  nuevoMovimiento = {
-    tipo: 'INGRESO',
-    descripcion: '',
-    monto: 0
-  };
+  movimientosFiltrados: any[] = [];
 
   mensaje: string = '';
 
+  // ✅ Filtros
+  filtroFechaDesde: string = '';
+  filtroFechaHasta: string = '';
+  filtroTipo: string = '';
+  filtroCategoria: string = '';
+
+  categoriasUnicas: string[] = [];
+
+  constructor(
+    private movimientoService: MovimientoService,
+    private authService: AuthService
+  ) {}
+
   ngOnInit(): void {
-    // En el futuro: aquí cargaremos los movimientos desde el backend
-    this.movimientos = [
-      { id: 1, tipo: 'INGRESO', descripcion: 'Pago recibido', monto: 1200 },
-      { id: 2, tipo: 'EGRESO', descripcion: 'Compra insumos', monto: 300 }
-    ];
+    this.cargarMovimientos();
   }
 
-  registrarMovimiento() {
-    if (!this.nuevoMovimiento.descripcion || this.nuevoMovimiento.monto <= 0) {
-      this.mensaje = 'Por favor completa todos los campos correctamente.';
+  cargarMovimientos(): void {
+    const usuario = this.authService.obtenerUsuario();
+
+    if (!usuario || !usuario.id) {
+      this.mensaje = '⚠️ No hay usuario autenticado.';
       return;
     }
 
-    const nuevo = {
-      id: this.movimientos.length + 1,
-      ...this.nuevoMovimiento
-    };
+    const esAdmin = usuario.rol === "ADMIN";
 
-    this.movimientos.push(nuevo);
-    this.mensaje = 'Movimiento registrado correctamente ✅';
-    this.nuevoMovimiento = { tipo: 'INGRESO', descripcion: '', monto: 0 };
+    this.movimientoService.listarPorUsuario(usuario.id, esAdmin).subscribe({
+      next: data => {
+        this.movimientos = data.map(m => ({
+          ...m,
+          fecha: m.fecha ? new Date(m.fecha) : null,
+          categoria: m.categoria?.nombre,
+          metodoPago: m.metodoPago?.tipo
+        }));
+
+        // ✅ Categorías únicas para el select
+        this.categoriasUnicas = [...new Set(this.movimientos.map(m => m.categoria))];
+
+        this.movimientosFiltrados = [...this.movimientos];
+      },
+      error: err => console.error('❌ Error al cargar movimientos:', err)
+    });
+  }
+
+  // ✅ Filtrar correctamente por rango de fechas + tipo + categoría
+  aplicarFiltros(): void {
+    this.movimientosFiltrados = this.movimientos.filter(m => {
+
+      // Fecha desde
+      if (this.filtroFechaDesde && m.fecha < new Date(this.filtroFechaDesde)) {
+        return false;
+      }
+
+      // Fecha hasta (incluye todo el día)
+      if (this.filtroFechaHasta && m.fecha > new Date(this.filtroFechaHasta + 'T23:59:59')) {
+        return false;
+      }
+
+      // Tipo
+      if (this.filtroTipo && m.tipo !== this.filtroTipo) {
+        return false;
+      }
+
+      // Categoría
+      if (this.filtroCategoria && m.categoria !== this.filtroCategoria) {
+        return false;
+      }
+
+      return true;
+    });
   }
 }
