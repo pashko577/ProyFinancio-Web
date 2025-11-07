@@ -8,7 +8,10 @@ export class MetodoPagoService {
 
   constructor(private http: HttpClient) {}
 
-  listarMetodosPago(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
-  }
+listarMetodosPago(idUsuario: number): Observable<any[]> {
+  return this.http.get<any[]>(`http://localhost:8080/api/metodos-pago/usuario/${idUsuario}`);
+}
+
+
+
 }

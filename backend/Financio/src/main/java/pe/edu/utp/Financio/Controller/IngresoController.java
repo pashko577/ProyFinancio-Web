@@ -12,10 +12,9 @@ import pe.edu.utp.Financio.Service.MetodoPagoService;
 import pe.edu.utp.Financio.entity.Movimiento;
 import pe.edu.utp.Financio.entity.Categoria;
 import pe.edu.utp.Financio.entity.Metodopago;
-
 @RestController
 @RequestMapping("/api/ingresos")
-@CrossOrigin(origins = "http://localhost:4200")
+
 public class IngresoController {
 
     @Autowired
@@ -27,21 +26,17 @@ public class IngresoController {
     @Autowired
     private MetodoPagoService metodoPagoService;
 
-    // ✅ Registrar nuevo ingreso
     @PostMapping("/registrar")
     public ResponseEntity<Movimiento> registrarIngreso(@RequestBody Movimiento ingreso) {
 
-        // Traer categoría existente
         Categoria cat = categoriaService.buscarPorId(ingreso.getCategoria().getId())
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
         ingreso.setCategoria(cat);
 
-        // Traer método de pago existente
         Metodopago mp = metodoPagoService.buscarPorId(ingreso.getMetodoPago().getId())
                 .orElseThrow(() -> new RuntimeException("Método de pago no encontrado"));
         ingreso.setMetodoPago(mp);
 
-        // Configurar otros campos
         ingreso.setTipo("INGRESO");
         ingreso.setFecha(LocalDateTime.now());
 
@@ -49,7 +44,6 @@ public class IngresoController {
         return ResponseEntity.ok(nuevo);
     }
 
-    // ✅ Listar ingresos del usuario logueado
     @GetMapping("/usuario/{idUsuario}")
     public ResponseEntity<List<Movimiento>> listarIngresosPorUsuario(
             @PathVariable int idUsuario,
@@ -59,10 +53,10 @@ public class IngresoController {
         List<Movimiento> ingresos = movimientos.stream()
                 .filter(m -> "INGRESO".equalsIgnoreCase(m.getTipo()))
                 .toList();
+
         return ResponseEntity.ok(ingresos);
     }
 
-    // ✅ Eliminar ingreso
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarIngreso(@PathVariable int id) {
         boolean eliminado = movimientoService.eliminarMovimiento(id);
@@ -71,8 +65,8 @@ public class IngresoController {
                 : ResponseEntity.notFound().build();
     }
 
-    // ✅ Buscar ingreso por ID
-    @GetMapping("/{id}")
+    // ✅ Ruta corregida
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<Movimiento> obtenerIngresoPorId(@PathVariable int id) {
         return movimientoService.buscarPorId(id)
                 .filter(m -> "INGRESO".equalsIgnoreCase(m.getTipo()))
@@ -80,12 +74,12 @@ public class IngresoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET directo a /api/ingresos
     @GetMapping
     public ResponseEntity<List<Movimiento>> listarTodosIngresos() {
         List<Movimiento> ingresos = movimientoService.listarTodosMovimientos().stream()
                 .filter(m -> "INGRESO".equalsIgnoreCase(m.getTipo()))
                 .toList();
+
         return ResponseEntity.ok(ingresos);
     }
 }

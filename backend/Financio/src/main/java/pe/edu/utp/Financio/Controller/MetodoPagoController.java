@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/metodos-pago")
-@CrossOrigin(origins = "*")
+
 public class MetodoPagoController {
 
     @Autowired
@@ -19,10 +19,11 @@ public class MetodoPagoController {
         return metodoPagoService.registrar(metodoPago);
     }
 
-    @GetMapping("/usuario/{idUsuario}")
-    public List<Metodopago> listarPorUsuario(@PathVariable int idUsuario) {
-        return metodoPagoService.listarPorUsuario(idUsuario);
-    }
+@GetMapping("/usuario/{idUsuario}")
+public List<Metodopago> listarPorUsuario(@PathVariable int idUsuario) {
+    return metodoPagoService.listarPorUsuario(idUsuario);
+}
+
 
     @GetMapping("/existe")
     public boolean existe(
@@ -30,4 +31,9 @@ public class MetodoPagoController {
             @RequestParam String tipo) {
         return metodoPagoService.existeMetodoPago(idUsuario, tipo);
     }
+   @GetMapping
+public List<Metodopago> listarTodos() {
+    return metodoPagoService.listarTodos();
+}
+
 }

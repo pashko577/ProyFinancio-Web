@@ -33,4 +33,9 @@ public class CategoriaServiceImpl implements CategoriaService {
     public Optional<Categoria> buscarPorId(Integer id) {
         return categoriaRepository.findById(id);
     }
+    @Override
+public List<Categoria> listarTodas() {
+    return categoriaRepository.findAll();
+}
+
 }

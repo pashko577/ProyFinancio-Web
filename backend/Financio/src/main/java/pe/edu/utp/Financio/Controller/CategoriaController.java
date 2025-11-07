@@ -25,6 +25,10 @@ public class CategoriaController {
             @RequestParam String tipo) {
         return categoriaService.listarPorUsuario(idUsuario, tipo);
     }
+@GetMapping
+public List<Categoria> listarTodas() {
+    return categoriaService.listarTodas();
+}
 
     @GetMapping("/existe")
     public boolean existeCategoria(

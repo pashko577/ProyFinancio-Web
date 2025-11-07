@@ -2,7 +2,7 @@
   <h2 class="text-center mb-4">💰 Gestión de Ingresos</h2> <!-- Formulario de registro -->
   <div class="card p-4 mb-4 form-ingreso">
     <h5>Registro de Ingresos</h5>
-    <form (ngSubmit)="registrarIngreso()"> <!-- Monto -->
+  <form (ngSubmit)="registrarIngreso(); $event.preventDefault()" novalidate>
       <div class="mb-3"> <label class="form-label fw-semibold">Monto</label> <input type="number" class="form-control"
           placeholder="Ej: 250.00" [(ngModel)]="nuevoIngreso.monto" name="monto" required> </div> <!-- Categoría -->
       <div class="mb-3"> <label class="form-label fw-semibold">Categoría</label> <select class="form-select"
@@ -13,7 +13,8 @@
       <div class="mb-3"> <label class="form-label fw-semibold">Método de Pago</label> <select class="form-select"
           [(ngModel)]="nuevoIngreso.metodoPago" name="metodoPago" required>
           <option value="" disabled selected>Seleccione método de pago</option>
-          <option *ngFor="let m of metodosPago" [value]="m.id">{{ m.nombre }}</option>
+          <option *ngFor="let m of metodosPago" [value]="m.id">{{ m.tipo }}</option>
+
         </select> </div> <!-- Descripción -->
       <div class="mb-3"> <label class="form-label fw-semibold">Descripción</label> <textarea
           class="form-control descripcion-input" placeholder="Ej: Pago por servicio, venta del día, etc..."

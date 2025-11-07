@@ -10,10 +10,12 @@ import lombok.*;
 @Builder
 public class Metodopago {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_metodopago")
     private Integer id;
 
     @ManyToOne @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
     private String tipo;
+    
 }
