@@ -1,6 +1,7 @@
 package pe.edu.utp.Financio.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.utp.Financio.entity.Categoria;
 import pe.edu.utp.Financio.Service.CategoriaService;
@@ -19,15 +20,14 @@ public class CategoriaController {
         return categoriaService.registrar(categoria);
     }
 
-    @GetMapping("/usuario/{idUsuario}")
-    public List<Categoria> listarPorUsuario(
-            @PathVariable int idUsuario,
-            @RequestParam String tipo) {
-        return categoriaService.listarPorUsuario(idUsuario, tipo);
-    }
-@GetMapping
-public List<Categoria> listarTodas() {
-    return categoriaService.listarTodas();
+@GetMapping("/usuario/{idUsuario}/{tipo}")
+public ResponseEntity<List<Categoria>> listarPorUsuarioYTipo(
+        @PathVariable int idUsuario,
+        @PathVariable String tipo
+) {
+    return ResponseEntity.ok(
+            categoriaService.listarPorUsuarioYTipo(idUsuario, tipo.toUpperCase())
+    );
 }
 
     @GetMapping("/existe")

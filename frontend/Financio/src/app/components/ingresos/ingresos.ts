@@ -46,15 +46,16 @@ ngOnInit(): void {
   }
 
   // 1) Cargar categorías
-  this.categoriasService.listarCategorias().subscribe({
-    next: categorias => {
-      this.categorias = categorias;
+this.categoriasService.getCategoriasPorUsuarioYTipo(usuario.id, "INGRESO").subscribe({
+  next: categorias => {
+    this.categorias = categorias;
 
-      // ✅ 2) Cargar métodos DE UNA SOLA VEZ
-      this.cargarMetodosPago(Number(usuario.id));
-    },
-    error: err => console.error('❌ Error al cargar categorías:', err)
-  });
+    // ✅ Ahora sí cargar métodos una sola vez
+    this.cargarMetodosPago(Number(usuario.id));
+  },
+  error: err => console.error('❌ Error al cargar categorías:', err)
+});
+
 }
 
 

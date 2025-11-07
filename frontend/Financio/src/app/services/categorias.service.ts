@@ -12,4 +12,8 @@ export class CategoriasService {
   listarCategorias(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+  getCategoriasPorUsuarioYTipo(idUsuario: number, tipo: string) {
+  return this.http.get<any[]>(`${this.apiUrl}/usuario/${idUsuario}/${tipo}`);
+}
+
 }

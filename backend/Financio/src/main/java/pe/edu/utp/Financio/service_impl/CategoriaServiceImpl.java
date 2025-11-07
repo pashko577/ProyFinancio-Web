@@ -21,7 +21,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
-    public List<Categoria> listarPorUsuario(Integer idUsuario, String tipo) { 
+    public List<Categoria> listarPorUsuarioYTipo(Integer idUsuario, String tipo) { 
         return categoriaRepository.findByUsuario_IdAndTipo(idUsuario, tipo);
     }
 
