@@ -11,6 +11,7 @@ export class IngresoService {
 
   constructor(private http: HttpClient) {}
 
+  // ✅ Cambiado a /registrar
   registrarIngreso(ingreso: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/registrar`, ingreso);
   }

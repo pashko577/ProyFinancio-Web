@@ -2,10 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { GastoService } from '../../services/gasto.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/AuthService';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @Component({
+  
 standalone:true,
-  imports:[CommonModule,FormsModule],
+  imports:[CommonModule,FormsModule, HttpClientModule],
   selector: 'app-gastos',
   templateUrl: './gastos.html',
   styleUrls: ['./gastos.css']
@@ -19,6 +23,26 @@ export class Gastos implements OnInit {
     monto: null,
     descripcion: ''
   };
+
+    metodosPago = [
+    { id: 'EFECTIVO', nombre: 'Efectivo' },
+    { id: 'TRANSFERENCIA_BANCARIA', nombre: 'Transferencia bancaria' },
+    { id: 'DEPOSITO', nombre: 'Depósito' },
+    { id: 'TARJETA_CREDITO', nombre: 'Tarjeta de crédito' },
+    { id: 'TARJETA_DEBITO', nombre: 'Tarjeta de débito' },
+    { id: 'YAPE_PLIN', nombre: 'Yape / Plin' },
+    { id: 'OTRO', nombre: 'Otro' }
+  ];
+
+
+  categoriasGastos= [
+    { id: 'VENTA_TIENDA', nombre: 'Ventas en tienda' },
+    { id: 'VENTA_ONLINE', nombre: 'Ventas online' },
+    { id: 'VENTA_REDES', nombre: 'Ventas por redes sociales' },
+    { id: 'VENTA_MAYOR', nombre: 'Ventas al por mayor' },
+    { id: 'PERSONALIZACION', nombre: 'Ingresos por personalización' },
+    { id: 'OTROS_INGRESOS', nombre: 'Otros ingresos' }
+  ];
 
   constructor(private gastoService: GastoService) {}
 

@@ -7,6 +7,7 @@ import pe.edu.utp.Financio.entity.Metodopago;
 import pe.edu.utp.Financio.repository.MetodopagoRepository;
 import pe.edu.utp.Financio.Service.MetodoPagoService;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MetodoPagoServiceImpl implements MetodoPagoService {
@@ -27,5 +28,11 @@ public class MetodoPagoServiceImpl implements MetodoPagoService {
     @Override
     public boolean existeMetodoPago(Integer idUsuario, String tipo) {
         return metodoPagoRepository.existsByUsuario_IdAndTipo(idUsuario, tipo); // ✅ corregido
+    }
+
+    
+    @Override
+    public Optional<Metodopago> buscarPorId(Integer id) {
+        return metodoPagoRepository.findById(id);
     }
 }

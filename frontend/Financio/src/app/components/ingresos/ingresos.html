@@ -1,68 +1,50 @@
 <div class="container mt-4">
-  <h2 class="text-center mb-4">💰 Gestión de Ingresos</h2>
-
-  <!-- Formulario de registro -->
-  <div class="card p-3 mb-4">
-    <form (ngSubmit)="registrarIngreso()">
-      <div class="row mb-2">
-        <div class="col-md-6">
-          <input 
-            type="text" 
-            class="form-control" 
-            placeholder="Descripción" 
-            [(ngModel)]="nuevoIngreso.descripcion" 
-            name="descripcion" 
-            required
-          >
-        </div>
-        <div class="col-md-6">
-          <input 
-            type="number" 
-            class="form-control" 
-            placeholder="Monto" 
-            [(ngModel)]="nuevoIngreso.monto" 
-            name="monto" 
-            required
-          >
-        </div>
-      </div>
-      <button type="submit" class="btn btn-success w-100">Registrar Ingreso</button>
-    </form>
-
-    <!-- Mensaje de feedback -->
-    <div *ngIf="mensaje" class="alert alert-info mt-2">
-      {{ mensaje }}
-    </div>
-  </div>
-
-  <!-- Tabla de ingresos -->
+  <h2 class="text-center mb-4">💰 Gestión de Ingresos</h2> <!-- Formulario de registro -->
+  <div class="card p-4 mb-4 form-ingreso">
+    <h5>Registro de Ingresos</h5>
+    <form (ngSubmit)="registrarIngreso()"> <!-- Monto -->
+      <div class="mb-3"> <label class="form-label fw-semibold">Monto</label> <input type="number" class="form-control"
+          placeholder="Ej: 250.00" [(ngModel)]="nuevoIngreso.monto" name="monto" required> </div> <!-- Categoría -->
+      <div class="mb-3"> <label class="form-label fw-semibold">Categoría</label> <select class="form-select"
+          [(ngModel)]="nuevoIngreso.categoria" name="categoria" required>
+          <option value="" disabled selected>Seleccione categoría</option>
+          <option *ngFor="let c of categorias" [value]="c.id">{{ c.nombre }}</option>
+        </select> </div> <!-- Método de Pago -->
+      <div class="mb-3"> <label class="form-label fw-semibold">Método de Pago</label> <select class="form-select"
+          [(ngModel)]="nuevoIngreso.metodoPago" name="metodoPago" required>
+          <option value="" disabled selected>Seleccione método de pago</option>
+          <option *ngFor="let m of metodosPago" [value]="m.id">{{ m.nombre }}</option>
+        </select> </div> <!-- Descripción -->
+      <div class="mb-3"> <label class="form-label fw-semibold">Descripción</label> <textarea
+          class="form-control descripcion-input" placeholder="Ej: Pago por servicio, venta del día, etc..."
+          [(ngModel)]="nuevoIngreso.descripcion" name="descripcion" rows="4" required></textarea> </div> <button
+        type="submit" class="btn btn-success w-100">Registrar Ingreso</button>
+    </form> <!-- Mensaje -->
+    <div *ngIf="mensaje" class="alert alert-info mt-3 text-center"> {{ mensaje }} </div>
+  </div> <!-- Tabla de ingresos -->
   <div class="card p-3">
     <h5>Lista de Ingresos</h5>
     <table class="table table-striped mt-2">
       <thead>
         <tr>
           <th>ID</th>
+          <th>Categoría</th>
+          <th>Método de Pago</th>
           <th>Descripción</th>
           <th>Monto</th>
-          <th>Fecha</th>
-          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let i of ingresos">
           <td>{{ i.id }}</td>
+          <td>{{ i.categoria }}</td>
+          <td>{{ i.metodoPago }}</td>
           <td>{{ i.descripcion || '—' }}</td>
           <td>{{ i.monto | currency:'PEN' }}</td>
-          <td>{{ i.fecha | date:'short' }}</td>
-          <td>
-            <button class="btn btn-sm btn-outline-danger" (click)="eliminarIngreso(i.id)">🗑️</button>
-          </td>
+          <td> <button class="btn btn-sm btn-outline-danger" (click)="eliminarIngreso(i.id)">🗑️</button> </td>
         </tr>
       </tbody>
     </table>
-
-    <div *ngIf="ingresos.length === 0" class="text-center text-muted mt-2">
-      No hay ingresos registrados aún.
-    </div>
+    <div *ngIf="ingresos.length === 0" class="text-center text-muted mt-2"> No hay ingresos registrados aún. </div>
   </div>
 </div>

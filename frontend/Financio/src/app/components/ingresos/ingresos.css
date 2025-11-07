@@ -1,55 +1,29 @@
-.container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 15px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.form-ingreso {
+  max-width: 600px;
+  margin: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  transition: 0.3s;
+  
 }
 
-h2, h3 {
-  text-align: center;
+.form-ingreso:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+
+.form-label {
   color: #333;
+ 
 }
 
-.form {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 15px;
-}
-
-input, select, button {
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-th, td {
+.form-control, .form-select {
   padding: 10px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
+  font-size: 0.95rem;
 }
 
-.mensaje {
-  text-align: center;
-  color: green;
-  font-weight: bold;
+.descripcion-input {
+  resize: vertical;       /* Permite ampliar si el usuario quiere */
+  min-height: 80px;       /* Altura mínima cómoda */
+  font-size: 0.95rem;
+  padding: 12px;
 }

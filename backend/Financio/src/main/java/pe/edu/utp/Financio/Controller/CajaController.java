@@ -10,7 +10,7 @@ import pe.edu.utp.Financio.repository.CajaRepository;
 
 @RestController
 @RequestMapping("/api/cajas")
-@CrossOrigin(origins = "*")
+
 public class CajaController {
 
     @Autowired

@@ -8,7 +8,7 @@ import pe.edu.utp.Financio.Service.AporteService;
 
 @RestController
 @RequestMapping("/api/aportes")
-@CrossOrigin(origins = "*")
+
 public class AporteController {
 
     @Autowired

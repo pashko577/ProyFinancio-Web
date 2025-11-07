@@ -1,0 +1,29 @@
+.form-ingreso {
+  max-width: 600px;
+  margin: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  transition: 0.3s;
+  
+}
+
+.form-ingreso:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+
+.form-label {
+  color: #333;
+ 
+}
+
+.form-control, .form-select {
+  padding: 10px;
+  font-size: 0.95rem;
+}
+
+.descripcion-input {
+  resize: vertical;       /* Permite ampliar si el usuario quiere */
+  min-height: 80px;       /* Altura mínima cómoda */
+  font-size: 0.95rem;
+  padding: 12px;
+}

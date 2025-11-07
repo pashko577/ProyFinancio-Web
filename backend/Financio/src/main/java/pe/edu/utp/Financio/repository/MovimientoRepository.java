@@ -13,4 +13,5 @@ public interface MovimientoRepository extends JpaRepository<Movimiento, Integer>
 
     // Buscar movimientos por tipo (ingreso/gasto)
     List<Movimiento> findByTipo(String tipo);
+    List<Movimiento> findByUsuario_IdAndTipo(int idUsuario, String tipo);
 }

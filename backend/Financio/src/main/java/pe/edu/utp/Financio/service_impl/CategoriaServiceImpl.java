@@ -7,6 +7,7 @@ import pe.edu.utp.Financio.entity.Categoria;
 import pe.edu.utp.Financio.repository.CategoriaRepository;
 import pe.edu.utp.Financio.Service.CategoriaService;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
@@ -27,5 +28,9 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public boolean existeCategoria(Integer idUsuario, String nombre, String tipo) { 
         return categoriaRepository.existsByUsuario_IdAndNombreAndTipo(idUsuario, nombre, tipo);
+    }
+        @Override
+    public Optional<Categoria> buscarPorId(Integer id) {
+        return categoriaRepository.findById(id);
     }
 }
