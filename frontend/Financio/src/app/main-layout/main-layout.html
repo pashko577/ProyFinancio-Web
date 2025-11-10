@@ -3,12 +3,13 @@
   <aside class="sidebar">
     <h2>Financio</h2>
     <nav>
-      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       <a routerLink="/ingresos" routerLinkActive="active">Ingresos</a>
       <a routerLink="/gastos" routerLinkActive="active">Gastos</a>
       <a routerLink="/movimientos" routerLinkActive="active">Movimientos</a>
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       <a routerLink="/caja" routerLinkActive="active">Caja</a>
       <a routerLink="/metas" routerLinkActive="active">Metas</a>
+      <a routerLink="/exportar" routerLinkActive="active">Exportar Datos</a>
       <a *ngIf="rol === 'ADMIN'" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
       <a (click)="mostrarModal = true">Cerrar sesión</a>
     </nav>

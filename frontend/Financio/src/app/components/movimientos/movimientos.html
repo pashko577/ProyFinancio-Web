@@ -18,26 +18,25 @@
     </div>
 
     <!-- Tipo -->
-    <div class="col-md-3">
-      <label class="form-label fw-semibold">Tipo</label>
-      <select class="form-select" [(ngModel)]="filtroTipo" (change)="aplicarFiltros()">
-        <option value="">Todos</option>
-        <option value="INGRESO">Ingreso</option>
-        <option value="GASTO">Gasto</option>
-      </select>
-    </div>
-
-    <!-- Categoría -->
-    <div class="col-md-3">
-      <label class="form-label fw-semibold">Categoría</label>
-      <select class="form-select" [(ngModel)]="filtroCategoria" (change)="aplicarFiltros()">
-        <option value="">Todas</option>
-        <option *ngFor="let c of categoriasUnicas" [value]="c">{{ c }}</option>
-      </select>
-    </div>
-
-  </div>
+<div class="col-md-3">
+  <label class="form-label fw-semibold">Tipo</label>
+  <select class="form-select" [(ngModel)]="filtroTipo" (change)="aplicarFiltros()">
+    <option value="">Todos</option>
+    <option value="INGRESO">Ingreso</option>
+    <option value="GASTO">Gasto</option>
+  </select>
 </div>
+
+<!-- Categoría -->
+<div class="col-md-3">
+  <label class="form-label fw-semibold">Categoría</label>
+  <select class="form-select" [(ngModel)]="filtroCategoria" (change)="aplicarFiltros()">
+    <option value="">Todas</option>
+    <option *ngFor="let c of categoriasUnicas" [value]="c">{{ c }}</option>
+  </select>
+</div>
+  </div>
+</div>  
 
   <!-- TABLA -->
   <table class="table table-striped table-hover">

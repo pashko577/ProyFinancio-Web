@@ -16,6 +16,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { AuthGuard } from './components/guards/auth-guard';
 import { AdminGuard } from './components/guards/admin.guard';
 
+
 export const routes: Routes = [
   // 🌐 Rutas públicas
   { path: '', component: Home },           // Inicio público
@@ -45,6 +46,12 @@ export const routes: Routes = [
         path: 'metas', 
         loadComponent: () => import('./components/metas/metas').then(m => m.Metas) 
       },
+
+       { 
+      path: 'exportar', 
+      loadComponent: () => import('./exportar/exportar-datos').then(m => m.ExportarDatos) 
+    },
+      
       { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard] }, // solo admin
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' } // redirige a dashboard por defecto
     ]

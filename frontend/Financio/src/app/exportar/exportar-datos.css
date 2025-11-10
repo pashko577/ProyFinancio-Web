@@ -1,0 +1,50 @@
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  background: #fff;
+  border-radius: 10px;
+  max-width: 480px;
+  margin: auto;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.grupo label {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+select,
+input[type="date"] {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #4b8df8;
+  color: #fff;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #2e6ce0;
+}

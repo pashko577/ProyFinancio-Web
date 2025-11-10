@@ -1,1 +1,47 @@
-<p>metas works!</p>
+<h2 class="titulo">🎯 Metas</h2>
+
+<!-- Mensaje de estado -->
+<div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
+
+<div class="tarjeta">
+  <label>Nombre de la Meta</label>
+  <input type="text" [(ngModel)]="nuevaMeta.nombre" placeholder="Ej: Ahorro para viaje">
+
+  <label>Monto Objetivo</label>
+  <input type="number" [(ngModel)]="nuevaMeta.montoObjetivo" placeholder="Ej: 1500">
+
+  <label>Fecha Límite</label>
+  <input type="date" [(ngModel)]="nuevaMeta.fechaLimite">
+
+  <label>% Destinado</label>
+  <input type="number" [(ngModel)]="nuevaMeta.porcentaje" placeholder="Ej: 10">
+
+  <button type="button" class="btn-guardar" (click)="registrarMeta()">Guardar Meta</button>
+</div>
+
+<hr>
+
+<table class="tabla">
+  <thead>
+    <tr>
+      <th>Meta</th>
+      <th>Objetivo</th>
+      <th>Acumulado</th>
+      <th>%</th>
+      <th>Fecha Límite</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let m of metas">
+      <td>{{ m.nombre }}</td>
+      <td>S/. {{ m.montoObjetivo }}</td>
+      <td>S/. {{ m.acumulado }}</td>
+      <td>{{ m.porcentaje }}%</td>
+      <td>{{ m.fechaLimite | date:'dd/MM/yyyy' }}</td>
+      <td>
+        <button type="button" class="btn-desactivar" (click)="desactivarMeta(m.id!)">Desactivar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

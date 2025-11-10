@@ -1,0 +1,31 @@
+<h2 class="text-center">📊 Exportar Datos</h2>
+
+<div class="filtros">
+
+  <!-- 1. Tipo Movimiento -->
+  <div class="grupo">
+    <label>Tipo:</label>
+    <select [(ngModel)]="tipoSeleccionado">
+      <option value="TODOS">Todos</option>
+      <option value="INGRESO">Ingresos</option>
+      <option value="GASTO">Gastos</option>
+      <option value="MOVIMIENTO">Movimientos</option>
+    </select>
+  </div>
+
+  <!-- 2. Fechas -->
+  <div class="grupo">
+    <label>Desde:</label>
+    <input type="date" [(ngModel)]="fechaDesde">
+
+    <label>Hasta:</label>
+    <input type="date" [(ngModel)]="fechaHasta">
+  </div>
+
+  <!-- 3. Botones de exportación -->
+  <div class="botones">
+    <button (click)="exportarExcel()">Exportar Excel</button>
+    <button (click)="exportarPDF()">Exportar PDF</button>
+  </div>
+
+</div>

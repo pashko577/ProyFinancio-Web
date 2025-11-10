@@ -26,6 +26,7 @@ export class Movimientos implements OnInit {
   filtroCategoria: string = '';
 
   categoriasUnicas: string[] = [];
+  categoriasTodas: string[] = []; // para “Todos”
 
   constructor(
     private movimientoService: MovimientoService,
@@ -55,8 +56,9 @@ export class Movimientos implements OnInit {
           metodoPago: m.metodoPago?.tipo
         }));
 
-        // ✅ Categorías únicas para el select
-        this.categoriasUnicas = [...new Set(this.movimientos.map(m => m.categoria))];
+        // Guardar todas las categorías originales
+        this.categoriasTodas = [...new Set(this.movimientos.map(m => m.categoria))];
+        this.categoriasUnicas = [...this.categoriasTodas];
 
         this.movimientosFiltrados = [...this.movimientos];
       },
@@ -64,31 +66,32 @@ export class Movimientos implements OnInit {
     });
   }
 
-  // ✅ Filtrar correctamente por rango de fechas + tipo + categoría
+  // ✅ Filtrar movimientos y actualizar categorías dinámicamente
   aplicarFiltros(): void {
+    // 1️⃣ Actualizar categorías según tipo seleccionado
+    if (!this.filtroTipo || this.filtroTipo === 'todos') {
+      this.categoriasUnicas = [...this.categoriasTodas];
+    } else {
+      this.categoriasUnicas = [
+        ...new Set(this.movimientos
+          .filter(m => m.tipo === this.filtroTipo)
+          .map(m => m.categoria))
+      ];
+    }
+
+    // Resetear categoría si ya no existe
+    if (this.filtroCategoria && !this.categoriasUnicas.includes(this.filtroCategoria)) {
+      this.filtroCategoria = '';
+    }
+
+    // 2️⃣ Filtrar movimientos para la tabla
     this.movimientosFiltrados = this.movimientos.filter(m => {
-
-      // Fecha desde
-      if (this.filtroFechaDesde && m.fecha < new Date(this.filtroFechaDesde)) {
-        return false;
-      }
-
-      // Fecha hasta (incluye todo el día)
-      if (this.filtroFechaHasta && m.fecha > new Date(this.filtroFechaHasta + 'T23:59:59')) {
-        return false;
-      }
-
-      // Tipo
-      if (this.filtroTipo && m.tipo !== this.filtroTipo) {
-        return false;
-      }
-
-      // Categoría
-      if (this.filtroCategoria && m.categoria !== this.filtroCategoria) {
-        return false;
-      }
-
+      if (this.filtroFechaDesde && m.fecha < new Date(this.filtroFechaDesde)) return false;
+      if (this.filtroFechaHasta && m.fecha > new Date(this.filtroFechaHasta + 'T23:59:59')) return false;
+      if (this.filtroTipo && this.filtroTipo !== 'todos' && m.tipo !== this.filtroTipo) return false;
+      if (this.filtroCategoria && m.categoria !== this.filtroCategoria) return false;
       return true;
     });
   }
+
 }
