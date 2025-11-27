@@ -1,6 +1,8 @@
 package pe.edu.utp.Financio.service_impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 import pe.edu.utp.Financio.entity.Caja;
 import pe.edu.utp.Financio.repository.CajaRepository;
 import pe.edu.utp.Financio.Service.CajaService;
@@ -11,24 +13,28 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+
 public class CajaServiceImpl implements CajaService {
 
-    @Autowired
-    private CajaRepository cajaRepository;
+    private final CajaRepository cajaRepository;
 
     @Override
     public Caja guardarFondo(Caja caja) {
-        caja.setFechaApertura(LocalDate.now());
+        if (caja.getFechaApertura() == null) {
+            caja.setFechaApertura(LocalDate.now());
+        }
         return cajaRepository.save(caja);
     }
 
     @Override
     public Optional<Caja> guardarCierre(int idCaja, BigDecimal cierre) {
-        return cajaRepository.findById(idCaja).map(caja -> {
-            caja.setCierre(cierre);
-            caja.setFechaCierre(LocalDate.now());
-            return cajaRepository.save(caja);
-        });
+        return cajaRepository.findById(idCaja)
+                .map(caja -> {
+                    caja.setCierre(cierre);
+                    caja.setFechaCierre(LocalDate.now());
+                    return cajaRepository.save(caja);
+                });
     }
 
     @Override
@@ -45,3 +51,4 @@ public class CajaServiceImpl implements CajaService {
         return cajaRepository.findAll();
     }
 }
+

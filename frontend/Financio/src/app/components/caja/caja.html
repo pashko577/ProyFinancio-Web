@@ -1,1 +1,57 @@
-<p>caja works!</p>
+<h2>Gestión de Caja</h2>
+
+<!-- AGREGAR FONDO -->
+<section>
+  <h3>Abrir Caja (Fondo)</h3>
+  <input type="number" placeholder="ID Usuario" [(ngModel)]="idUsuario">
+  <input type="text" placeholder="Nombre" [(ngModel)]="nombre">
+  <input type="number" placeholder="Fondo" [(ngModel)]="fondo">
+  <button (click)="agregarFondo()">Registrar Fondo</button>
+</section>
+
+<hr>
+
+<!-- AGREGAR CIERRE -->
+<section>
+  <h3>Cerrar Caja</h3>
+  <input type="number" placeholder="ID Caja" [(ngModel)]="idCajaCierre">
+  <input type="number" placeholder="Cierre" [(ngModel)]="cierre">
+  <button (click)="agregarCierre()">Registrar Cierre</button>
+</section>
+
+<hr>
+
+<!-- ELIMINAR -->
+<section>
+  <h3>Eliminar Registro</h3>
+  <input type="number" placeholder="ID Caja" [(ngModel)]="idEliminar">
+  <button (click)="eliminar()">Eliminar</button>
+</section>
+
+<hr>
+
+<!-- LISTADO -->
+<section>
+  <h3>Registros</h3>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Usuario</th>
+      <th>Nombre</th>
+      <th>Fondo</th>
+      <th>Cierre</th>
+      <th>Apertura</th>
+      <th>Cierre</th>
+    </tr>
+
+    <tr *ngFor="let c of cajas">
+      <td>{{ c.idCaja }}</td>
+      <td>{{ c.idUsuario }}</td>
+      <td>{{ c.nombre }}</td>
+      <td>{{ c.fondo }}</td>
+      <td>{{ c.cierre }}</td>
+      <td>{{ c.fechaApertura }}</td>
+      <td>{{ c.fechaCierre }}</td>
+    </tr>
+  </table>
+</section>

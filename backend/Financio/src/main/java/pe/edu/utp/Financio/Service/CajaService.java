@@ -8,7 +8,6 @@ import java.util.Optional;
 public interface CajaService {
     Caja guardarFondo(Caja caja);
     Optional<Caja> guardarCierre(int idCaja, BigDecimal cierre);
-    
     boolean eliminar(int idCaja);
     List<Caja> listar();
 }

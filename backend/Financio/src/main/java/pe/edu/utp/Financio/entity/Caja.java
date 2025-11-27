@@ -1,4 +1,5 @@
 package pe.edu.utp.Financio.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,10 +13,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class Caja {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCaja;
 
-    @ManyToOne @JoinColumn(name = "id_usuario")
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
     private String nombre;
