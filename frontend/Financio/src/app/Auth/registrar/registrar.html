@@ -1,0 +1,12 @@
+<section class="registrar">
+  <h2>Registrar Usuario</h2>
+  <form (ngSubmit)="registrar()">
+    <input [(ngModel)]="nombre" name="nombre" placeholder="Nombre" required>
+    <input [(ngModel)]="dni" name="dni" placeholder="DNI" required>
+    <input [(ngModel)]="correo" name="correo" placeholder="Correo" required>
+    <input [(ngModel)]="telefono" name="telefono" placeholder="Teléfono">
+    <input [(ngModel)]="contrasena" name="contrasena" type="password" placeholder="Contraseña" required>
+    <button type="submit">Registrar</button>
+  </form>
+  <p *ngIf="mensaje">{{ mensaje }}</p>
+</section>

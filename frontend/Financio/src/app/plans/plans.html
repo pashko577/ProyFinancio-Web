@@ -3,57 +3,53 @@
   <p>Elige el plan que mejor se adapte a las necesidades de tu negocio y empieza a controlar tus finanzas con Financio.</p>
 
   <div class="contenedor-planes">
-    <!-- PLAN BÁSICO -->
     <div class="plan">
       <h3>💼 Plan Básico</h3>
       <p class="precio">S/ 29<span>/mes</span></p>
       <ul>
-        <li>✔ Registro de ingresos y egresos</li>
-        <li>✔ Reportes mensuales en PDF</li>
-        <li>✔ Categorías personalizadas</li>
-        <li>✔ Acceso al módulo de <strong>Caja</strong></li>
-        <li>❌ Sin análisis de finanzas</li>
-        <li>❌ Sin metas financieras</li>
-        <li>❌ Sin exportación de datos</li>
+        <li class="positivo">Registro de ingresos y egresos</li>
+        <li class="positivo">Reportes mensuales en PDF</li>
+        <li class="positivo">Categorías personalizadas</li>
+        <li class="positivo">Acceso al módulo de <strong>Caja</strong></li>
+        <li class="negativo">Sin análisis de finanzas</li>
+        <li class="negativo">Sin metas financieras</li>
+        <li class="negativo">Sin exportación de datos</li>
       </ul>
       <button class="boton-plan" (click)="abrirFormulario('Básico')">Elegir Plan</button>
     </div>
 
-    <!-- PLAN EMPRENDEDOR -->
     <div class="plan destacado">
       <h3>🚀 Plan Emprendedor</h3>
       <p class="precio">S/ 59<span>/mes</span></p>
       <ul>
-        <li>✔ Todo lo del Plan Básico</li>
-        <li>✔ Dashboard con indicadores</li>
-        <li>✔ Alertas inteligentes</li>
-        <li>✔ Análisis de finanzas automatizado</li>
-        <li>✔ Configuración de metas financieras</li>
-        <li>✔ Exportar datos a PDF y Excel</li>
-        <li>✔ Soporte prioritario</li>
+        <li class="positivo">Todo lo del Plan Básico</li>
+        <li class="positivo">Dashboard con indicadores</li>
+        <li class="positivo">Alertas inteligentes</li>
+        <li class="positivo">Análisis de finanzas automatizado</li>
+        <li class="positivo">Configuración de metas financieras</li>
+        <li class="positivo">Exportar datos a PDF y Excel</li>
+        <li class="positivo">Soporte prioritario</li>
       </ul>
       <button class="boton-plan" (click)="abrirFormulario('Emprendedor')">Elegir Plan</button>
     </div>
 
-    <!-- PLAN EMPRESARIAL -->
     <div class="plan">
       <h3>🏢 Plan Empresarial</h3>
       <p class="precio">S/ 99<span>/mes</span></p>
       <ul>
-        <li>✔ Todo lo del Plan Emprendedor</li>
-        <li>✔ Usuarios ilimitados y roles personalizados</li>
-        <li>✔ Integración avanzada con Excel y Power BI</li>
-        <li>✔ Respaldo automático en la nube</li>
-        <li>✔ Reportes personalizables</li>
-        <li>✔ Acceso a informes comparativos</li>
-        <li>✔ Soporte empresarial 24/7</li>
+        <li class="positivo">Todo lo del Plan Emprendedor</li>
+        <li class="positivo">Usuarios ilimitados y roles personalizados</li>
+        <li class="positivo">Integración avanzada con Excel y Power BI</li>
+        <li class="positivo">Respaldo automático en la nube</li>
+        <li class="positivo">Reportes personalizables</li>
+        <li class="positivo">Acceso a informes comparativos</li>
+        <li class="positivo">Soporte empresarial 24/7</li>
       </ul>
       <button class="boton-plan" (click)="abrirFormulario('Empresarial')">Elegir Plan</button>
     </div>
   </div>
 </section>
 
-<!-- 🧾 MODAL DE FORMULARIO -->
 <div class="modal" *ngIf="mostrarModal">
   <div class="modal-contenido">
     <span class="cerrar" (click)="cerrarModal()">&times;</span>
@@ -70,6 +66,6 @@
       <button type="submit">Enviar</button>
     </form>
 
-    <p *ngIf="enviado">✅ ¡Gracias {{ nombre }}! Tu solicitud ha sido registrada.</p>
+    <p *ngIf="enviado">✅ {{ mensajeRespuesta }}</p>
   </div>
 </div>

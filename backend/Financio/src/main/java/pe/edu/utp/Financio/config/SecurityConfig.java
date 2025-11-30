@@ -9,11 +9,12 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-             .cors(cors -> {}) // 👈 habilita CORS en Spring Security
-            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
-        return http.build();
-    }
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable())
+        .cors(cors -> {}) // 👈 habilita que tome la configuración de WebConfig
+        .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+    return http.build();
+}
+
 }

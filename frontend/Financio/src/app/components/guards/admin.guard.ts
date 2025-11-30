@@ -7,14 +7,12 @@ import { AuthService } from '../../services/AuthService';
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(): boolean {
-    if (this.authService.obtenerRol() === 'ADMIN') {
-      return true;
-    }
-    alert('❌ No tienes permisos para acceder a esta página');
-    this.router.navigate(['/dashboard']);
+    if (this.authService.obtenerRol() === 'ADMIN') return true;
+    alert('❌ No tienes permisos para esta página');
+    this.router.navigate(['/dashboard']); // redirige a dashboard si no es admin
     return false;
   }
 }

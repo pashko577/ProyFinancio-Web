@@ -1,8 +1,9 @@
+// src/app/Auth/login/login.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../services/usuario.services'; // <-- revisa este path
+import { UsuarioService } from '../../services/usuario.services';
 import { AuthService } from '../../services/AuthService';
 import { Usuario } from '../../models/usuario.model';
 
@@ -31,21 +32,25 @@ export class Login {
     }
 
     this.usuarioService.login(this.dni, this.contrasena).subscribe({
-      next: (usuario: Usuario) => {
-        this.authService.guardarUsuario(usuario);
-        this.mensaje = `Bienvenido, ${usuario.nombre}`;
+      next: (res: any) => {
+        const usuario: Usuario = {
+          id: res.id,
+          nombre: res.nombre,
+          dni: res.dni,
+          correo: res.correo,
+          telefono: res.telefono,
+          contrasena: '',
+          rol: res.rol
+        };
 
-        // Redirección según rol
-        switch (usuario.rol) {
-          case 'ADMIN':
-            this.router.navigate(['/dashboard']);
-            break;
-          case 'EMPLEADO':
-            this.router.navigate(['/movimientos']);
-            break;
-          default:
-            this.router.navigate(['/dashboard']);
-            break;
+        // Guarda en AuthService → actualiza navbar automáticamente
+        this.authService.guardarUsuario(usuario);
+
+        // Redirige según rol
+        if (usuario.rol === 'ADMIN') {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/movimientos']);
         }
       },
       error: () => {

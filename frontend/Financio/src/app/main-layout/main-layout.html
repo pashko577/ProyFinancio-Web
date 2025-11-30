@@ -2,16 +2,22 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <h2>Financio</h2>
+     <p *ngIf="nombreUsuario">Bienvenido, {{ nombreUsuario }}!</p>
     <nav>
+      <!-- Enlaces visibles para todos -->
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       <a routerLink="/ingresos" routerLinkActive="active">Ingresos</a>
       <a routerLink="/gastos" routerLinkActive="active">Gastos</a>
       <a routerLink="/movimientos" routerLinkActive="active">Movimientos</a>
-      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       <a routerLink="/caja" routerLinkActive="active">Caja</a>
       <a routerLink="/metas" routerLinkActive="active">Metas</a>
       <a routerLink="/exportar" routerLinkActive="active">Exportar Datos</a>
+
+      <!-- Solo visible para ADMIN -->
       <a *ngIf="rol === 'ADMIN'" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
-      <a (click)="mostrarModal = true">Cerrar sesión</a>
+
+      <!-- Cerrar sesión -->
+      <a (click)="abrirModal()">Cerrar sesión</a>
     </nav>
   </aside>
 
@@ -21,15 +27,13 @@
   </main>
 </div>
 
-
 <!-- MODAL CONFIRMACIÓN -->
 <div class="modal-overlay" *ngIf="mostrarModal">
   <div class="modal-box">
     <h3>¿Deseas cerrar sesión?</h3>
     <p>Se cerrará tu sesión y volverás a la pantalla de inicio.</p>
-
     <div class="modal-actions">
-      <button class="btn-cancel" (click)="mostrarModal = false">Cancelar</button>
+      <button class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
       <button class="btn-logout" (click)="cerrarSesion()">Sí, cerrar sesión</button>
     </div>
   </div>

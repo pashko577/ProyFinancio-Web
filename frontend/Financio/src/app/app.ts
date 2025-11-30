@@ -1,19 +1,28 @@
-import { Component, signal } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
-import { RouterLink } from '@angular/router';
+import { Component, effect } from '@angular/core';
+import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { AuthService } from './services/AuthService';
 import { Footer } from './Shared/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink,Footer],
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, Footer],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
-
 export class App {
-  protected readonly title = signal('Financio');
-  constructor(public authService: AuthService, private router: Router) {}
+  nombreUsuario = '';
+  rol = '';
+  
+
+  constructor(public authService: AuthService, private router: Router) {
+    // Efecto reactivo: cuando cambia el usuario en AuthService, actualiza navbar
+    effect(() => {
+      const usuario = this.authService.usuario();
+      this.nombreUsuario = usuario?.nombre || '';
+      this.rol = usuario?.rol || '';
+    });
+  }
 
   logout() {
     this.authService.cerrarSesion();

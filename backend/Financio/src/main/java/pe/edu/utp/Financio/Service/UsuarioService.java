@@ -13,4 +13,5 @@ public interface UsuarioService {
     boolean eliminar(int id);
     Optional<Usuario> login(String dni, String contrasenaHash);
     Optional<Usuario> obtenerAdmin();
+    Optional<Usuario> asignarRolAdmin(Integer idUsuario);
 }

@@ -10,7 +10,7 @@ import { Usuario } from '../models/usuario.model';
 export class UsuarioService {
   private apiUrl = 'http://localhost:8080/api/usuarios';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   crearUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/registrar`, usuario);
@@ -21,8 +21,12 @@ export class UsuarioService {
   }
 
   // ✅ Nuevo: login
-login(dni: string, contrasena: string) {
-  return this.http.post<Usuario>(`${this.apiUrl}/login`, { dni, contrasena });
-}
+  login(dni: string, contrasena: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { dni, contrasena });
+  }
 
+  // Nuevo: asignar rol ADMIN
+  asignarRolAdmin(idUsuario: number): Observable<Usuario> {
+    return this.http.put<Usuario>(`${this.apiUrl}/admin/${idUsuario}`, {});
+  }
 }

@@ -1,5 +1,5 @@
-/* login.css */
-.login {
+/* registrar.css */
+.registrar {
   width: 100%;
   max-width: 400px;
   margin: 50px auto;
@@ -10,18 +10,18 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.login h2 {
+.registrar h2 {
   text-align: center;
   margin-bottom: 25px;
   color: #333;
 }
 
-.login form {
+.registrar form {
   display: flex;
   flex-direction: column;
 }
 
-.login input {
+.registrar input {
   padding: 12px 15px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -30,15 +30,15 @@
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.login input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.registrar input:focus {
+  border-color: #28a745; /* verde suave para registrar */
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
   outline: none;
 }
 
-.login button {
+.registrar button {
   padding: 12px;
-  background-color: #007bff;
+  background-color: #28a745; /* verde */
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -47,12 +47,12 @@
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.login button:hover {
-  background-color: #0056b3;
+.registrar button:hover {
+  background-color: #218838;
   transform: translateY(-2px);
 }
 
-.login p {
+.registrar p {
   text-align: center;
   margin-top: 15px;
   color: red;

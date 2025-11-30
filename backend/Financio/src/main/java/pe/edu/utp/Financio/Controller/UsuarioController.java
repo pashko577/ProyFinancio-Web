@@ -25,35 +25,39 @@ public class UsuarioController {
     }
 
     @PostMapping("/registrar")
-    public ResponseEntity<Usuario> registrar(@RequestBody Usuario usuario) {
-        Usuario nuevo = usuarioService.registrar(usuario);
-        return ResponseEntity.ok(nuevo);
+    public ResponseEntity<?> registrar(@RequestBody Usuario usuario) {
+        try {
+            Usuario nuevo = usuarioService.registrar(usuario);
+            return ResponseEntity.ok(Map.of(
+                    "mensaje", "Usuario registrado correctamente",
+                    "usuario", nuevo));
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", ex.getMessage()));
+        }
     }
 
-@PostMapping("/login")
-public ResponseEntity<?> login(@RequestBody Usuario credenciales) {
-    Optional<Usuario> usuarioOpt = usuarioService.login(
-            credenciales.getDni(),
-            credenciales.getContrasena()
-    );
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Usuario credenciales) {
+        Optional<Usuario> usuarioOpt = usuarioService.login(
+                credenciales.getDni(),
+                credenciales.getContrasena());
 
-    if (usuarioOpt.isPresent()) {
-        Usuario usuario = usuarioOpt.get();
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
 
-        // ✅ Solo enviamos datos seguros al frontend
-        return ResponseEntity.ok(Map.of(
-                "id", usuario.getId(),
-                "nombre", usuario.getNombre(),
-                "dni", usuario.getDni(),
-                "rol", usuario.getRol()
-        ));
-    } else {
-        // ❌ Credenciales incorrectas
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(Map.of("mensaje", "Credenciales incorrectas"));
+            // ✅ Solo enviamos datos seguros al frontend
+            return ResponseEntity.ok(Map.of(
+                    "id", usuario.getId(),
+                    "nombre", usuario.getNombre(),
+                    "dni", usuario.getDni(),
+                    "rol", usuario.getRol()));
+        } else {
+            // ❌ Credenciales incorrectas
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("mensaje", "Credenciales incorrectas"));
+        }
     }
-}
-
 
     @GetMapping("/admin")
     public ResponseEntity<?> obtenerAdmin() {
@@ -70,4 +74,16 @@ public ResponseEntity<?> login(@RequestBody Usuario credenciales) {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @PutMapping("/admin/{id}")
+    public ResponseEntity<?> asignarRolAdmin(@PathVariable int id) {
+        Optional<Usuario> usuarioOpt = usuarioService.asignarRolAdmin(id);
+        if (usuarioOpt.isPresent()) {
+            return ResponseEntity.ok(usuarioOpt.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("mensaje", "Usuario no encontrado"));
+        }
+    }
+
 }

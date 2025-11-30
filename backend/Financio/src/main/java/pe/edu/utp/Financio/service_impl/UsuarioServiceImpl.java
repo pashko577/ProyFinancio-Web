@@ -18,10 +18,35 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario registrar(Usuario usuario) {
+
+        // 🔍 Validar si ya existe DNI o correo
+        Optional<Usuario> existente = usuarioRepository.findByDniOrCorreo(
+                usuario.getDni(),
+                usuario.getCorreo());
+
+        if (existente.isPresent()) {
+            throw new RuntimeException("El usuario ya está registrado");
+        }
+
         // 🔒 Encriptar la contraseña antes de guardar
         String hash = BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt());
         usuario.setContrasena(hash);
+
+        // ✅ Asignar rol automáticamente
+        long totalUsuarios = usuarioRepository.count();
+        usuario.setRol(totalUsuarios == 0 ? "ADMIN" : "EMPLEADO");
         return usuarioRepository.save(usuario);
+    }
+
+    // ✅ Nuevo método para asignar rol ADMIN
+    public Optional<Usuario> asignarRolAdmin(Integer idUsuario) {
+        Optional<Usuario> opt = usuarioRepository.findById(idUsuario);
+        if (opt.isPresent()) {
+            Usuario usuario = opt.get();
+            usuario.setRol("ADMIN");
+            return Optional.of(usuarioRepository.save(usuario));
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -43,18 +68,17 @@ public class UsuarioServiceImpl implements UsuarioService {
         return false;
     }
 
- @Override
-public Optional<Usuario> login(String dniOCorreo, String contrasena) {
-    Optional<Usuario> usuarioOpt = usuarioRepository.findByDniOrCorreo(dniOCorreo, dniOCorreo);
-    if (usuarioOpt.isPresent()) {
-        Usuario usuario = usuarioOpt.get();
-        if (BCrypt.checkpw(contrasena, usuario.getContrasena())) {
-            return Optional.of(usuario);
+    @Override
+    public Optional<Usuario> login(String dniOCorreo, String contrasena) {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByDniOrCorreo(dniOCorreo, dniOCorreo);
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            if (BCrypt.checkpw(contrasena, usuario.getContrasena())) {
+                return Optional.of(usuario);
+            }
         }
+        return Optional.empty();
     }
-    return Optional.empty();
-}
-
 
     @Override
     public Optional<Usuario> obtenerAdmin() {
