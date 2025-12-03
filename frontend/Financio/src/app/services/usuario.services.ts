@@ -29,4 +29,9 @@ export class UsuarioService {
   asignarRolAdmin(idUsuario: number): Observable<Usuario> {
     return this.http.put<Usuario>(`${this.apiUrl}/admin/${idUsuario}`, {});
   }
+
+  //obtener usuario
+  obtenerUsuario(id: number) {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
 }

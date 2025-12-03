@@ -10,24 +10,25 @@
 
       <!-- Links de navegación a la izquierda -->
       <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/" routerLinkActive="active">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/services" routerLinkActive="active">Servicios</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contacto</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/plans" routerLinkActive="active">Planes</a>
-        </li>
+        <li class="nav-item"><a class="nav-link" routerLink="/" routerLinkActive="active">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/services" routerLinkActive="active">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/contact" routerLinkActive="active">Contacto</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/plans" routerLinkActive="active">Planes</a></li>
       </ul>
 
       <!-- Botones a la derecha -->
-      <div class="d-flex">
-        <a routerLink="/login" class="btn btn-outline-light me-2">Iniciar Sesión</a>
-        <a routerLink="/registrar" class="btn btn-primary">Registrar</a>
+      <div class="d-flex align-items-center">
+        <!-- Usuario logueado -->
+        <ng-container *ngIf="nombreUsuario; else loginButtons">
+          <span class="text-light me-3">Hola, <strong>{{ nombreUsuario }}</strong></span>
+          <button class="btn btn-outline-light" (click)="abrirModal()">Cerrar Sesión</button>
+        </ng-container>
+
+        <!-- Si no hay usuario -->
+        <ng-template #loginButtons>
+          <a routerLink="/login" class="btn btn-outline-light me-2">Iniciar Sesión</a>
+          <a routerLink="/registrar" class="btn btn-primary">Registrar</a>
+        </ng-template>
       </div>
 
     </div>
@@ -38,7 +39,16 @@
   <router-outlet></router-outlet>
 </main>
 
-
 <footer>
   <app-footer></app-footer>
 </footer>
+<!-- Modal de confirmación -->
+<app-confirm-modal
+  [mostrar]="mostrarModal"
+  titulo="Cerrar Sesión"
+  mensaje="¿Deseas cerrar sesión y volver a la pantalla de inicio?"
+  textoCancelar="Cancelar"
+  textoConfirmar="Sí, cerrar sesión"
+  (cancelar)="cerrarModal()"
+  (confirmar)="logout()">
+</app-confirm-modal>

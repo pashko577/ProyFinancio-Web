@@ -14,4 +14,6 @@ public interface UsuarioService {
     Optional<Usuario> login(String dni, String contrasenaHash);
     Optional<Usuario> obtenerAdmin();
     Optional<Usuario> asignarRolAdmin(Integer idUsuario);
+    Optional<Usuario> obtenerPorId(int id);
+
 }

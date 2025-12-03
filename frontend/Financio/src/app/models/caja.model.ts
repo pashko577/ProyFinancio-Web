@@ -1,9 +1,12 @@
 export interface CajaModel {
-  idCaja?: number;
-  idUsuario: number;
-  nombre: string;
+  idCaja: number;
+  usuario: {
+    idUsuario: number;
+    nombre: string;
+  };
   fondo: number;
-  cierre?: number;
-  fechaApertura?: string;
-  fechaCierre?: string;
+  cierre: number;
+  fechaApertura: string;
+  fechaCierre: string;
 }
+

@@ -28,14 +28,20 @@ public class CajaServiceImpl implements CajaService {
     }
 
     @Override
-    public Optional<Caja> guardarCierre(int idCaja, BigDecimal cierre) {
-        return cajaRepository.findById(idCaja)
-                .map(caja -> {
-                    caja.setCierre(cierre);
-                    caja.setFechaCierre(LocalDate.now());
-                    return cajaRepository.save(caja);
-                });
-    }
+public Optional<Caja> guardarCierre(int idCaja, BigDecimal cierre) {
+    return cajaRepository.findById(idCaja)
+            .map(caja -> {
+                caja.setCierre(cierre);
+                caja.setFechaCierre(LocalDate.now());
+                return cajaRepository.save(caja);
+            });
+}
+
+@Override
+public Optional<Caja> obtenerUltimaCaja() {
+    return Optional.ofNullable(cajaRepository.findUltimaCaja());
+}
+
 
     @Override
     public boolean eliminar(int idCaja) {
@@ -50,5 +56,7 @@ public class CajaServiceImpl implements CajaService {
     public List<Caja> listar() {
         return cajaRepository.findAll();
     }
+
+    
 }
 

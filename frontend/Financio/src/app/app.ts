@@ -2,11 +2,13 @@ import { Component, effect } from '@angular/core';
 import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { AuthService } from './services/AuthService';
 import { Footer } from './Shared/footer/footer';
+import { CommonModule } from '@angular/common';
+import { ConfirmModal } from "./components/modals/confirm-modal";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, Footer],
+  imports: [CommonModule, RouterOutlet, RouterLink, Footer, ConfirmModal],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
@@ -23,9 +25,20 @@ export class App {
       this.rol = usuario?.rol || '';
     });
   }
+mostrarModal = false; // controla visibilidad del modal
 
-  logout() {
-    this.authService.cerrarSesion();
-    this.router.navigate(['/login']);
-  }
+abrirModal() {
+  this.mostrarModal = true;
+}
+
+cerrarModal() {
+  this.mostrarModal = false;
+}
+
+logout() {
+  this.authService.cerrarSesion();
+  this.cerrarModal();
+  this.router.navigate(['/login']);
+}
+
 }

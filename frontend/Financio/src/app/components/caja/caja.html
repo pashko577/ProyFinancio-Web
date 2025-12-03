@@ -1,57 +1,81 @@
-<h2>Gestión de Caja</h2>
+<div class="container mt-4">
+  <h2 class="text-center mb-4">🧾 Gestión de Caja</h2>
 
-<!-- AGREGAR FONDO -->
-<section>
-  <h3>Abrir Caja (Fondo)</h3>
-  <input type="number" placeholder="ID Usuario" [(ngModel)]="idUsuario">
-  <input type="text" placeholder="Nombre" [(ngModel)]="nombre">
-  <input type="number" placeholder="Fondo" [(ngModel)]="fondo">
-  <button (click)="agregarFondo()">Registrar Fondo</button>
-</section>
+  <!-- FORMULARIO ABRIR CAJA -->
+  <div class="card p-4 mb-4">
+    <h5>Abrir Caja (Fondo Inicial)</h5>
+    <form (ngSubmit)="agregarFondo(); $event.preventDefault()" novalidate>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Usuario</label>
+        <input type="text" class="form-control bg-light" [value]="nombre" readonly />
+      </div>
 
-<hr>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Fondo Inicial</label>
+        <input type="number" class="form-control" [(ngModel)]="fondo" name="fondo" required placeholder="Ej: 300.00" />
+      </div>
 
-<!-- AGREGAR CIERRE -->
-<section>
-  <h3>Cerrar Caja</h3>
-  <input type="number" placeholder="ID Caja" [(ngModel)]="idCajaCierre">
-  <input type="number" placeholder="Cierre" [(ngModel)]="cierre">
-  <button (click)="agregarCierre()">Registrar Cierre</button>
-</section>
+      <button type="submit" class="btn btn-success w-100">Registrar Fondo</button>
+    </form>
 
-<hr>
+    <div *ngIf="idCajaCreada" class="alert alert-success mt-3 text-center">
+      Caja creada con ID: <strong>{{ idCajaCreada }}</strong>
+    </div>
+  </div>
 
-<!-- ELIMINAR -->
-<section>
-  <h3>Eliminar Registro</h3>
-  <input type="number" placeholder="ID Caja" [(ngModel)]="idEliminar">
-  <button (click)="eliminar()">Eliminar</button>
-</section>
+  <!-- FORMULARIO CERRAR CAJA -->
+  <div class="card p-4 mb-4">
+    <h5>Cerrar Caja</h5>
+    <form (ngSubmit)="agregarCierre(); $event.preventDefault()" novalidate>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">ID Caja</label>
+        <input type="number" class="form-control" [(ngModel)]="idCajaCierre" name="idCajaCierre" required placeholder="Ej: 5" />
+      </div>
 
-<hr>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Fecha de Cierre</label>
+        <input type="date" class="form-control" [(ngModel)]="fechaCierre" name="fechaCierre" required />
+      </div>
 
-<!-- LISTADO -->
-<section>
-  <h3>Registros</h3>
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>Usuario</th>
-      <th>Nombre</th>
-      <th>Fondo</th>
-      <th>Cierre</th>
-      <th>Apertura</th>
-      <th>Cierre</th>
-    </tr>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Monto de Cierre</label>
+        <input type="number" class="form-control" [(ngModel)]="cierre" name="cierre" required placeholder="Ej: 520.00" />
+      </div>
 
-    <tr *ngFor="let c of cajas">
-      <td>{{ c.idCaja }}</td>
-      <td>{{ c.idUsuario }}</td>
-      <td>{{ c.nombre }}</td>
-      <td>{{ c.fondo }}</td>
-      <td>{{ c.cierre }}</td>
-      <td>{{ c.fechaApertura }}</td>
-      <td>{{ c.fechaCierre }}</td>
-    </tr>
-  </table>
-</section>
+      <button type="submit" class="btn btn-primary w-100">Registrar Cierre</button>
+    </form>
+  </div>
+
+  <!-- TABLA DE CAJAS -->
+  <div class="card p-3">
+    <h5>Registros de Caja</h5>
+    <table class="table table-striped mt-2">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>ID Usuario</th>
+          <th>Nombre</th>
+          <th>Fondo</th>
+          <th>Cierre</th>
+          <th>Apertura</th>
+          <th>Fecha Cierre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of cajas">
+          <td>{{ c.idCaja }}</td>
+          <td>{{ c.usuario?.idUsuario }}</td>
+          <td>{{ c.usuario?.nombre }}</td>
+          <td>{{ c.fondo }}</td>
+          <td>{{ c.cierre }}</td>
+          <td>{{ c.fechaApertura }}</td>
+          <td>{{ c.fechaCierre }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="cajas.length === 0" class="text-center text-muted mt-2">
+      No hay registros de caja todavía.
+    </div>
+  </div>
+</div>

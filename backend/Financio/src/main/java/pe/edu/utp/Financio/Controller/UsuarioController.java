@@ -86,4 +86,17 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/{id}")
+public ResponseEntity<?> obtenerPorId(@PathVariable int id) {
+    Optional<Usuario> usuarioOpt = usuarioService.obtenerPorId(id);
+
+    if (usuarioOpt.isPresent()) {
+        return ResponseEntity.ok(usuarioOpt.get());
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("mensaje", "Usuario no encontrado"));
+    }
+}
+
+
 }
