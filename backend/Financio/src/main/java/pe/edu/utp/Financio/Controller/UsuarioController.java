@@ -98,5 +98,17 @@ public ResponseEntity<?> obtenerPorId(@PathVariable int id) {
     }
 }
 
+//endpoint para superadmin
+@PutMapping("/superadmin/{id}")
+public ResponseEntity<?> asignarRolSuperadmin(@PathVariable int id) {
+    Optional<Usuario> usuarioOpt = usuarioService.asignarRolSuperadmin(id);
+
+    if (usuarioOpt.isPresent()) {
+        return ResponseEntity.ok(usuarioOpt.get());
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("mensaje", "Usuario no encontrado"));
+    }
+}
 
 }

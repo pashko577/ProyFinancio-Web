@@ -1,0 +1,127 @@
+/* Card general */
+.card {
+    border-radius: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagen de avatar */
+.card-img-top {
+    max-width: 140px;
+    border-radius: 50%;
+    background: #f5f5f5;
+}
+
+/* Títulos */
+.card-title {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* Footer */
+.card-footer button {
+    width: 32%;
+}
+
+/* BOTONES PERSONALIZADOS */
+.btn-sm {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Badge del rol */
+.badge {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+/* Estilos según rol */
+.badge-admin {
+    background-color: #0d6efd !important;
+}
+
+.badge-superadmin {
+    background-color: #dc3545 !important;
+}
+
+.badge-usuario {
+    background-color: #198754 !important;
+}
+
+/* ===== CARD ESTILO PREMIUM ===== */
+.card {
+    border-radius: 18px;
+    background: linear-gradient(145deg, #ffffff, #f1f1f1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
+}
+
+/* Imagen circular glossy */
+.card-img-top {
+    max-width: 130px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffffff 0%, #e2e2e2 100%);
+    padding: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
+}
+
+/* ===== NEON BADGES ===== */
+.rol-badge {
+    font-size: 0.85rem;
+    padding: 7px 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    color: white;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+/* SUPERADMIN 🔥 */
+.rol-superadmin {
+    background: linear-gradient(135deg, #ff4e50, #c31432);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.55);
+}
+
+/* ADMIN 💙 */
+.rol-admin {
+    background: linear-gradient(135deg, #0072ff, #00c6ff);
+    box-shadow: 0 0 10px rgba(0, 153, 255, 0.55);
+}
+
+/* USUARIO 💚 */
+.rol-empleado {
+   background: linear-gradient(135deg, #075f52, #345417);
+box-shadow: 0 0 12px rgba(15, 82, 15, 0.65);
+
+}
+
+/* ===== BOTONES MÁS BONITOS ===== */
+.card-footer button {
+    width: 32%;
+    border-radius: 10px !important;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.card-footer button:hover {
+    transform: scale(1.07);
+}
+
+/* ===== TEXTO DEL CARD ===== */
+.card-title {
+    font-size: 1.25rem;
+    color: #222;
+    font-weight: 700;
+}

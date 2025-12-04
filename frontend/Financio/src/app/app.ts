@@ -15,7 +15,7 @@ import { ConfirmModal } from "./components/modals/confirm-modal";
 export class App {
   nombreUsuario = '';
   rol = '';
-  
+
 
   constructor(public authService: AuthService, private router: Router) {
     // Efecto reactivo: cuando cambia el usuario en AuthService, actualiza navbar
@@ -25,20 +25,41 @@ export class App {
       this.rol = usuario?.rol || '';
     });
   }
-mostrarModal = false; // controla visibilidad del modal
+  mostrarModal = false; // controla visibilidad del modal
 
-abrirModal() {
-  this.mostrarModal = true;
-}
+  abrirModal() {
+    this.mostrarModal = true;
+  }
 
-cerrarModal() {
-  this.mostrarModal = false;
-}
+  cerrarModal() {
+    this.mostrarModal = false;
+  }
 
-logout() {
-  this.authService.cerrarSesion();
-  this.cerrarModal();
-  this.router.navigate(['/login']);
-}
+  logout() {
+    this.authService.cerrarSesion();
+    this.cerrarModal();
+    this.router.navigate(['/login']);
+  }
 
+  irAPanel() {
+    const usuario = this.authService.usuario();
+    if (!usuario) return;
+
+    switch (usuario.rol) {
+      case 'SUPERADMIN':
+        this.router.navigate(['/gestor-usuarios']);
+        break;
+      case 'ADMIN':
+        this.router.navigate(['/usuarios']); // o el panel de admin correspondiente
+        break;
+      default:
+        this.router.navigate(['/movimientos']);
+    }
+  }
+  
+  get mostrarBotonPanel(): boolean {
+    // Rutas públicas
+    const rutasPublicas = ['/', '/services', '/contact', '/plans'];
+    return this.nombreUsuario !== '' && rutasPublicas.includes(this.router.url);
+  }
 }

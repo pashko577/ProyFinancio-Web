@@ -20,8 +20,10 @@ export class MainLayout implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.rol = this.authService.obtenerRol() || '';
-  }
+  const usuario = this.authService.obtenerUsuario();
+  this.rol = usuario?.rol || '';
+  this.nombreUsuario = usuario?.nombre || '';
+}
 
   abrirModal(): void {
     this.mostrarModal = true;
@@ -35,5 +37,15 @@ export class MainLayout implements OnInit {
     this.authService.cerrarSesion();
     this.router.navigate(['/login']);
   }
-}
 
+  // ✅ Aquí va el nuevo método
+  irAPanel(): void {
+    if (this.rol === 'SUPERADMIN') {
+      this.router.navigate(['/gestor-usuarios']);
+    } else if (this.rol === 'ADMIN') {
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.router.navigate(['/movimientos']);
+    }
+  }
+}

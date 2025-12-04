@@ -1,27 +1,60 @@
-h2, h3 {
+/* Contenedor principal */
+.container {
+  max-width: 900px;
+}
+
+/* Tarjetas de formularios */
+.caja-card {
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.caja-card:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+}
+
+/* Títulos */
+h2, h5 {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Labels */
+.form-label {
+  font-weight: 600;
   color: #333;
 }
 
-input {
-  margin: 5px;
-  padding: 6px;
+/* Inputs */
+.form-control, .form-select {
+  padding: 10px;
+  font-size: 0.95rem;
+  border-radius: 8px;
 }
 
+/* Inputs número */
+input[type="number"]::-webkit-inner-spin-button {
+  height: 28px;
+}
+
+/* Botones */
 button {
-  padding: 6px 12px;
-  background: steelblue;
-  color: white;
-  border: none;
+  border-radius: 8px !important;
+  font-weight: 600;
+}
+
+/* Tabla */
+.table {
+  font-size: 0.88rem;
+}
+
+.table tbody tr:hover {
+  background-color: #eef7ff;
   cursor: pointer;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-}
-
-table, th, td {
-  border: 1px solid #aaa;
-  padding: 6px;
+/* Alert */
+.alert {
+  border-radius: 8px;
 }

@@ -16,6 +16,8 @@
   import { AuthGuard } from './components/guards/auth-guard';
   import { AdminGuard } from './components/guards/admin.guard';
   import { AdminUser } from './components/admin/adminUser';
+import { SuperAdminGuard } from './components/guards/superadmin.guard';
+import { GestorUsuarios } from './components/gestor-usuarios/gestor-usuarios';
 
 
 
@@ -38,6 +40,8 @@
         { path: 'dashboard', component: Dashboard },
         { path: 'ingresos', component: Ingresos },
         { path: 'gastos', component: Gastos },
+        
+        
         { 
           path: 'movimientos', 
           loadComponent: () => import('./components/movimientos/movimientos').then(m => m.Movimientos) 
@@ -55,7 +59,7 @@
         path: 'exportar', 
         loadComponent: () => import('./exportar/exportar-datos').then(m => m.ExportarDatos) 
       },
-        
+        { path: 'gestor-usuarios', component: GestorUsuarios, canActivate: [SuperAdminGuard] }, //solo superadmin
         { path: 'usuarios', component: AdminUser, canActivate: [AdminGuard] }, // solo admin
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' } // redirige a dashboard por defecto
       ]

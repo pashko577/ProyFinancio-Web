@@ -1,16 +1,58 @@
-#home h2{
-    color: #0d6edf;
+/* ================= MAIN CONTENT ================= */
+#home {
+  padding: 4rem 0;
+  background: linear-gradient(180deg, #f0f4ff, #ffffff);
 }
 
-#home .shadow-sm:hover{
-    transform: translateY(-5px);
-    transition: 0.5s ease-in-out ;
-    
+#home h2, #home h3 {
+  color: #0d1a3a;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
 }
-.carousel-item img {
-  height: 380px; /* Puedes aumentar o reducir */
+
+#home p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+#home .carousel-inner {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+#home .carousel-item img {
+  height: 400px;
   object-fit: cover;
-  width: 100%;
-  border-radius: 8px;
-  
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+#home .carousel-item img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* Cards Razones */
+.razon-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.razon-link:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+#home .shadow-sm {
+  background: linear-gradient(145deg, #cfe0ff, #9fc5ff);
+  border-radius: 15px;
+  padding: 2rem;
+  transition: all 0.5s ease;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+}
+
+#home .col-md-4 .shadow-sm h4 {
+  color: #0d6efd;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }

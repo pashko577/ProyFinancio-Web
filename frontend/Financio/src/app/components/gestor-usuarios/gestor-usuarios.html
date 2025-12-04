@@ -1,0 +1,53 @@
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">👤 Gestor de Usuarios — SUPERADMIN</h2>
+
+    <div class="row g-3">
+        <div class="col-md-4" *ngFor="let u of usuarios">
+            <div class="card shadow-sm h-100">
+
+                <!-- Imagen -->
+                <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" class="card-img-top p-4"
+                    style="width: 160px; margin: 0 auto;" alt="avatar">
+
+                <!-- Body -->
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">{{ u.nombre }}</h5>
+
+                    <p class="mb-1"><strong>ID:</strong> {{ u.id }}</p>
+                    <p class="mb-1"><strong>DNI:</strong> {{ u.dni }}</p>
+                    <p class="mb-1"><strong>Correo:</strong> {{ u.correo }}</p>
+                    <p class="mb-1">
+                        <strong>Rol:</strong>
+                        <span class="badge rol-badge" [ngClass]="{
+    'rol-superadmin': u.rol === 'SUPERADMIN',
+    'rol-admin': u.rol === 'ADMIN',
+    'rol-empleado': u.rol === 'EMPLEADO'
+  }">
+                            {{ u.rol }}
+                        </span>
+
+                    </p>
+                    <p class="text-muted" style="font-size: 0.85rem;">
+                        Registrado: {{ u.fechaRegistro | date:'short' }}
+                    </p>
+                </div>
+
+                <!-- Acciones -->
+                <div class="card-footer bg-white d-flex justify-content-around">
+                    <button class="btn btn-danger btn-sm" (click)="eliminar(u.id)">
+                        Eliminar
+                    </button>
+
+                    <button class="btn btn-warning btn-sm" (click)="asignarAdmin(u.id)">
+                        ADMIN
+                    </button>
+
+                    <button class="btn btn-primary btn-sm" (click)="asignarSuperadmin(u.id)">
+                        SUPERADMIN
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

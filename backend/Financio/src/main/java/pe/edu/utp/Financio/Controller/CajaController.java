@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 import pe.edu.utp.Financio.Service.CajaService;
 import pe.edu.utp.Financio.entity.Caja;
-import pe.edu.utp.Financio.repository.CajaRepository;
+
 
 @RestController
 @RequestMapping("/api/caja")

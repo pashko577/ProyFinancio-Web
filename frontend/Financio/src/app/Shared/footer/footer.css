@@ -1,76 +1,52 @@
-footer {
-    background-color: #1A2B4C;
-    padding: 3rem 1rem;
-    color: white;
+/* ================= FOOTER ================= */
+footer.bd-footer {
+  background: linear-gradient(90deg, #0d6efd, #6610f2);
+  color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 0 0; ;
+  box-sizing: border-box;
 }
 
-footer .row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    align-items: flex-start;
+footer.bd-footer .container {
+  flex: 1;
 }
 
-footer .col-6,
-footer .col-lg-2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+footer.bd-footer h5.titlelink {
+  font-size: 1.3rem;
+  color: #FFD447;
+  border-bottom: 2px solid #FFD447;
+  display: inline-block;
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.75rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+  
 }
 
-footer h5.titlelink {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid #FFD447;
-    display: inline-block;
-    padding-bottom: 0.3rem;
+footer.bd-footer a {
+  color: #ffff;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-footer .links ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+footer.bd-footer a:hover {
+  color: #FFD447;
+  transform: scale(1.05);
 }
 
-footer .links li {
-    margin-bottom: 0.6rem;
-}
-
-footer .links a {
-    text-decoration: none;
-    color: #ddd;
-    transition: color 0.2s ease;
-}
-
-footer .links a:hover {
-    color: #FFD447;
-}
-
-footer .copy {
-    text-align: center;
-    margin-top: 2rem;
-    font-size: 0.9rem;
-    color: #aaa;
-}
-
-/* Footer alternativo */
-.footer {
-    background-color: #1A2B4C;
-}
-
-.footer-copy {
-    background-color: #15223f;
-    text-align: center;
-    padding: 1rem 0;
-    color: white;
-    font-size: 0.9rem;
-    margin-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footertext a,
-.mb-2,
-.titlelink,
-.links a {
-    color: white;
+/* Footer Copy centrado completo */
+footer.bd-footer .footer-copy {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFEB3B; /* amarillo brillante */
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #0a52c2, #4a08b0); 
+  margin: 0;
+  border: none;
 }

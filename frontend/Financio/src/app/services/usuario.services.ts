@@ -34,4 +34,12 @@ export class UsuarioService {
   obtenerUsuario(id: number) {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
+  eliminarUsuario(idUsuario: number) {
+  return this.http.delete(`${this.apiUrl}/${idUsuario}`);
+}
+
+asignarRolSuperadmin(idUsuario: number) {
+  return this.http.put(`${this.apiUrl}/superadmin/${idUsuario}`, {});
+}
+
 }

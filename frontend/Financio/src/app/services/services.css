@@ -1,68 +1,126 @@
-/* Sección de Beneficios */
-#beneficios {
+/* ================= SECCIÓN DE BENEFICIOS ================= */
+#services {
     text-align: center;
-    padding: 60px 20px;
-    background-color: #f0f4f8;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #e0f7fa, #ffffff); /* pegado a los bordes */
 }
 
-#beneficios h2 {
-    color: #003366;
-    font-size: 2em;
-    margin-bottom: 10px;
+#services h2 {
+    color: #0d47a1;
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.1);
 }
 
-#beneficios p {
-    max-width: 800px;
+#services p {
+    max-width: 850px;
     margin: 0 auto 40px auto;
-    font-size: 1.1em;
-    line-height: 1.6em;
+    font-size: 1.2em;
+    line-height: 1.7em;
+    color: #555;
 }
 
-/* Rejilla de recuadros */
+/* ================= REJILLA DE BENEFICIOS ================= */
 .contenedor-beneficios {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+    gap: 15px; /* espacio reducido entre cards */
     justify-items: center;
+    margin-bottom: 30px;
 }
 
-/* Recuadros individuales */
+/* ================= RECÚADROS ================= */
 .beneficio {
-    background-color: white;
-    border: 2px solid #0055aa;
-    border-radius: 12px;
-    padding: 25px 20px;
-    width: 280px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    background: linear-gradient(145deg, #ffffff, #e3f2fd);
+    border-radius: 16px;
+    padding: 30px 25px;
+    width: 320px; /* más grande que antes */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: all 0.4s ease;
     text-align: left;
+    border-top: 4px solid #1976d2;
+    position: relative;
+    overflow: hidden;
+}
+
+.beneficio::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(252, 163, 17, 0.1);
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+    pointer-events: none;
+}
+
+.beneficio:hover::before {
+    top: -20%;
+    left: -20%;
 }
 
 .beneficio:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+    border-top-color: #fca311;
 }
 
 .beneficio h3 {
-    color: #003366;
-    margin-bottom: 10px;
-    font-size: 1.2em;
+    color: #0d47a1;
+    margin-bottom: 12px;
+    font-size: 1.3em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .beneficio p {
-    font-size: 1em;
-    line-height: 1.5em;
+    font-size: 1.05em;
+    line-height: 1.6em;
+    color: #444;
 }
 
-/*llamado a plan */
+/* ================= LLAMADO A PLAN ================= */
 .call-to-plans {
-  margin-top: 20px;
-  text-align: center;
+    margin-top: 40px;
+    text-align: center;
 }
-.btn {
-  background-color: #fca311;
-  color: #fff;
-  padding: 8px 14px;
-  text-decoration: none;
-  border-radius: 6px;
+
+.call-to-plans .btn {
+    background: linear-gradient(90deg, #fca311, #ff8f00);
+    color: #fff;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(252, 163, 17, 0.4);
+}
+
+.call-to-plans .btn:hover {
+    background: linear-gradient(90deg, #ff8f00, #fca311);
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(252, 163, 17, 0.6);
+}
+
+/* ================= RESPONSIVO ================= */
+@media (max-width: 992px) {
+    .contenedor-beneficios {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas medianas */
+    }
+    .beneficio {
+        width: 90%;
+    }
+}
+
+@media (max-width: 576px) {
+    .contenedor-beneficios {
+        grid-template-columns: 1fr; /* 1 columna en móviles */
+    }
+    .beneficio {
+        width: 95%;
+    }
 }

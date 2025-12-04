@@ -23,7 +23,7 @@ export class Login {
     private usuarioService: UsuarioService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   login(): void {
     if (!this.dni || !this.contrasena) {
@@ -47,7 +47,9 @@ export class Login {
         this.authService.guardarUsuario(usuario);
 
         // Redirige según rol
-        if (usuario.rol === 'ADMIN') {
+        if (usuario.rol === 'SUPERADMIN') {
+          this.router.navigate(['/gestor-usuarios']);
+        } else if (usuario.rol === 'ADMIN') {
           this.router.navigate(['/dashboard']);
         } else {
           this.router.navigate(['/movimientos']);

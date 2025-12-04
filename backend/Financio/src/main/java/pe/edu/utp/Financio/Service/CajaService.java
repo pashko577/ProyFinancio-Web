@@ -2,7 +2,6 @@ package pe.edu.utp.Financio.Service;
 import pe.edu.utp.Financio.entity.Caja;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
