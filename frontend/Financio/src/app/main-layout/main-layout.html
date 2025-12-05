@@ -1,8 +1,10 @@
-<div class="layout">
+<!-- === LAYOUT COMPLETO SOLO SI NO ES SUPERADMIN === -->
+<div class="layout" *ngIf="!esSuperadmin">
+
   <!-- Sidebar -->
   <aside class="sidebar">
     <h2>Financio</h2>
-     <!--<p *ngIf="nombreUsuario">Bienvenido, {{ nombreUsuario }}!</p>-->
+
     <nav>
       <!-- Enlaces visibles para todos -->
       <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
@@ -26,6 +28,13 @@
     <router-outlet></router-outlet>
   </main>
 </div>
+
+
+<!-- === SOLO CONTENIDO PARA SUPERADMIN === -->
+<div *ngIf="esSuperadmin" class="content">
+  <router-outlet></router-outlet>
+</div>
+
 
 <!-- MODAL CONFIRMACIÓN -->
 <div class="modal-overlay" *ngIf="mostrarModal">

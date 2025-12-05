@@ -8,4 +8,6 @@ public interface MetaService {
     List<Meta> listarActivasPorUsuario(int idUsuario);
     Meta actualizarAcumulado(String idMeta, double monto);
     void desactivarSiCumplida(String idMeta);
+    void eliminar(String idMeta);
+
 }

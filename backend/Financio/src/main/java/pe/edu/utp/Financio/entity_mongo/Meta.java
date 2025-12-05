@@ -14,7 +14,7 @@ public class Meta {
     @Id
     private String id; // ObjectId hex string
     private Integer idUsuario;
-    private String nombre;
+    private String nombreMeta;
     private Double montoObjetivo;
     private Double acumulado;
     private Double porcentaje;

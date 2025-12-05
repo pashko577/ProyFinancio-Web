@@ -48,4 +48,7 @@ export class MainLayout implements OnInit {
       this.router.navigate(['/movimientos']);
     }
   }
+  get esSuperadmin(): boolean {
+    return this.rol === 'SUPERADMIN';
+  }
 }

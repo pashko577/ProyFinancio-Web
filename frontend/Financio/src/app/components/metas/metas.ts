@@ -19,11 +19,11 @@ export class Metas implements OnInit {
 
   nuevaMeta: Meta = {
     idUsuario: 0,
-    nombre: '',
+    nombreMeta: '',
     montoObjetivo: 0,
     acumulado: 0,
     porcentaje: 0,
-    fechaLimite: '', // 'yyyy-MM-dd'
+    fechaLimite: '',
     activa: true
   };
 
@@ -35,6 +35,7 @@ export class Metas implements OnInit {
   ngOnInit() {
     const usuario = this.authService.obtenerUsuario();
     if (!usuario?.id) return;
+
     this.nuevaMeta.idUsuario = usuario.id;
     this.cargarMetas();
   }
@@ -44,13 +45,14 @@ export class Metas implements OnInit {
     if (!usuario?.id) return;
 
     this.metasService.listarPorUsuario(usuario.id).subscribe({
-      next: metas => this.metas = metas,
+      next: metas => (this.metas = metas),
       error: err => console.error('Error al cargar metas:', err)
     });
   }
 
   registrarMeta() {
     const usuario = this.authService.obtenerUsuario();
+
     if (!usuario?.id) {
       this.mensaje = '⚠️ Usuario no autenticado';
       return;
@@ -58,34 +60,33 @@ export class Metas implements OnInit {
 
     this.nuevaMeta.idUsuario = usuario.id;
 
-    // Validar campos mínimos
-    if (!this.nuevaMeta.nombre || !this.nuevaMeta.montoObjetivo || !this.nuevaMeta.fechaLimite) {
+    // Validación mínima
+    if (!this.nuevaMeta.nombreMeta || !this.nuevaMeta.montoObjetivo || !this.nuevaMeta.fechaLimite) {
       this.mensaje = '⚠️ Complete todos los campos obligatorios';
       return;
     }
 
-     // Convertir fecha vacía a null para LocalDate
-    const metaEnviar={
+    // Prepara la meta para enviar a Spring Boot
+    const metaEnviar: Meta = {
       ...this.nuevaMeta,
       fechaLimite: this.nuevaMeta.fechaLimite || null
     };
 
-    this.metasService.registrar(this.nuevaMeta).subscribe({
-      next: metaCreada => {
-        this.metas.push(metaCreada);
+    this.metasService.registrar(metaEnviar).subscribe({
+      next: () => {
+        this.mensaje = '✅ Meta registrada correctamente';
+        this.cargarMetas(); // Recarga desde backend
 
-        // Resetear formulario
+        // Limpiar formulario
         this.nuevaMeta = {
           idUsuario: usuario.id!,
-          nombre: '',
+          nombreMeta: '',
           montoObjetivo: 0,
           acumulado: 0,
           porcentaje: 0,
           fechaLimite: '',
           activa: true
         };
-
-        this.mensaje = '✅ Meta registrada correctamente';
       },
       error: err => {
         console.error('Error al registrar meta:', err);
@@ -94,19 +95,42 @@ export class Metas implements OnInit {
     });
   }
 
-desactivarMeta(id?: string) {
-  if (!id) return; // evita errores si es undefined
+  desactivarMeta(id?: string) {
+    if (!id) return;
 
-  if (!confirm('¿Desactivar meta?')) return;
+    if (!confirm('¿Desactivar meta?')) return;
 
-  this.metasService.desactivar(id).subscribe({
+    this.metasService.desactivar(id).subscribe({
+      next: () => {
+        this.mensaje = '✅ Meta desactivada correctamente';
+        this.cargarMetas();
+      },
+      error: err => {
+        console.error('Error al desactivar meta:', err);
+        this.mensaje = '❌ Error al desactivar meta';
+      }
+    });
+  }
+
+  //metodo para agregar ahorro
+  agregarAhorro(meta: Meta) {
+  const montoStr = prompt(`Ingrese monto a agregar a "${meta.nombreMeta}":`);
+  if (!montoStr) return;
+
+  const monto = parseFloat(montoStr);
+  if (isNaN(monto) || monto <= 0) {
+    alert('Monto inválido');
+    return;
+  }
+
+  this.metasService.agregarAhorro(meta.id!, monto).subscribe({
     next: () => {
-      this.metas = this.metas.filter(m => m.id !== id);
-      this.mensaje = '✅ Meta desactivada correctamente.';
+      this.mensaje = '✅ Ahorro agregado correctamente';
+      this.cargarMetas(); // recarga la lista con el nuevo acumulado
     },
     error: err => {
-      console.error('Error al desactivar meta:', err);
-      this.mensaje = '❌ Error al desactivar meta';
+      console.error('Error al agregar ahorro:', err);
+      this.mensaje = '❌ Error al agregar ahorro';
     }
   });
 }

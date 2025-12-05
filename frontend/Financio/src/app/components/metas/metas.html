@@ -5,7 +5,7 @@
 
 <div class="tarjeta">
   <label>Nombre de la Meta</label>
-  <input type="text" [(ngModel)]="nuevaMeta.nombre" placeholder="Ej: Ahorro para viaje">
+  <input type="text" [(ngModel)]="nuevaMeta.nombreMeta" placeholder="Ej: Ahorro para viaje">
 
   <label>Monto Objetivo</label>
   <input type="number" [(ngModel)]="nuevaMeta.montoObjetivo" placeholder="Ej: 1500">
@@ -29,17 +29,24 @@
       <th>Acumulado</th>
       <th>%</th>
       <th>Fecha Límite</th>
-      <th></th>
+      <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let m of metas">
-      <td>{{ m.nombre }}</td>
+      <td>{{ m.nombreMeta }}</td>
       <td>S/. {{ m.montoObjetivo }}</td>
       <td>S/. {{ m.acumulado }}</td>
-      <td>{{ m.porcentaje }}%</td>
+      <td>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" [style.width.%]="m.porcentaje">
+            {{ m.porcentaje | number:'1.0-0' }}%
+          </div>
+        </div>
+      </td>
       <td>{{ m.fechaLimite | date:'dd/MM/yyyy' }}</td>
       <td>
+        <button type="button" class="btn-agregar" (click)="agregarAhorro(m)">Agregar Ahorro</button>
         <button type="button" class="btn-desactivar" (click)="desactivarMeta(m.id!)">Desactivar</button>
       </td>
     </tr>

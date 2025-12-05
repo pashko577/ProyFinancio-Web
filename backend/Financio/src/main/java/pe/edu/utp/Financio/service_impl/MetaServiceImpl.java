@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pe.edu.utp.Financio.entity_mongo.Meta;
 import pe.edu.utp.Financio.repository.MetaRepository;
 import pe.edu.utp.Financio.Service.MetaService;
+
 import java.util.List;
 
 @Service
@@ -17,7 +18,12 @@ public class MetaServiceImpl implements MetaService {
     public Meta registrar(Meta meta) {
         meta.setActiva(true);
         meta.setAcumulado(0.0);
-        meta.setPorcentaje(0.0);
+
+        // Solo pon 0 si viene null
+        if (meta.getPorcentaje() == null) {
+            meta.setPorcentaje(0.0);
+        }
+
         return metaRepository.save(meta);
     }
 
@@ -28,25 +34,34 @@ public class MetaServiceImpl implements MetaService {
 
     @Override
     public Meta actualizarAcumulado(String idMeta, double monto) {
-        return metaRepository.findById(idMeta).map(meta -> {
-            double nuevoAcumulado = meta.getAcumulado() + monto;
-            double porcentaje = (nuevoAcumulado / meta.getMontoObjetivo()) * 100;
-            meta.setAcumulado(nuevoAcumulado);
-            meta.setPorcentaje(Math.min(porcentaje, 100.0));
-            if (nuevoAcumulado >= meta.getMontoObjetivo()) {
-                meta.setActiva(false);
-            }
-            return metaRepository.save(meta);
-        }).orElse(null);
+        Meta meta = metaRepository.findById(idMeta)
+                .orElseThrow(() -> new RuntimeException("Meta no encontrada: " + idMeta));
+
+        double nuevoAcumulado = meta.getAcumulado() + monto;
+        double porcentaje = (nuevoAcumulado / meta.getMontoObjetivo()) * 100;
+
+        meta.setAcumulado(nuevoAcumulado);
+        meta.setPorcentaje(Math.min(porcentaje, 100.0));
+
+        if (nuevoAcumulado >= meta.getMontoObjetivo()) {
+            meta.setActiva(false);
+        }
+
+        return metaRepository.save(meta);
     }
 
     @Override
     public void desactivarSiCumplida(String idMeta) {
-        metaRepository.findById(idMeta).ifPresent(meta -> {
-            if (meta.getAcumulado() >= meta.getMontoObjetivo()) {
-                meta.setActiva(false);
-                metaRepository.save(meta);
-            }
-        });
+        Meta meta = metaRepository.findById(idMeta)
+                .orElseThrow(() -> new RuntimeException("Meta no encontrada"));
+
+        if (meta.getAcumulado() >= meta.getMontoObjetivo()) {
+            meta.setActiva(false);
+            metaRepository.save(meta);
+        }
     }
+    @Override
+public void eliminar(String idMeta) {
+    metaRepository.deleteById(idMeta);
+}
 }
