@@ -21,12 +21,12 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
-    public List<Categoria> listarPorUsuarioYTipo(Integer idUsuario, String tipo) {
+    public List<Categoria> listarPorUsuarioYTipo(Long idUsuario, String tipo) {
         return categoriaRepository.findByUsuario_IdAndTipo(idUsuario, tipo);
     }
 
     @Override
-    public boolean existeCategoria(Integer idUsuario, String nombre, String tipo) {
+    public boolean existeCategoria(Long idUsuario, String nombre, String tipo) {
         return categoriaRepository.existsByUsuario_IdAndNombreAndTipo(idUsuario, nombre, tipo);
     }
 

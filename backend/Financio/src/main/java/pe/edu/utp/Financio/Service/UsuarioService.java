@@ -11,17 +11,18 @@ public interface UsuarioService {
 
     List<Usuario> listarTodos();
 
-    boolean eliminar(int id);
+    boolean eliminar(Long id);
 
     Optional<Usuario> login(String dni, String contrasenaHash);
 
     Optional<Usuario> obtenerAdmin();
 
-    Optional<Usuario> asignarRolAdmin(Integer idUsuario);
+    Optional<Usuario> asignarRolAdmin(Long idUsuario);
 
-    Optional<Usuario> obtenerPorId(int id);
+    Optional<Usuario> obtenerPorId(Long id);
 
     // para superadmin
-    Optional<Usuario> asignarRolSuperadmin(Integer idUsuario);
+    Optional<Usuario> asignarRolSuperadmin(Long idUsuario);
+    public Usuario guardar(Usuario usuario);
 
 }

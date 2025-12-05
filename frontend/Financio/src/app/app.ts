@@ -41,21 +41,34 @@ export class App {
     this.router.navigate(['/login']);
   }
 
-  irAPanel() {
-    const usuario = this.authService.usuario();
-    if (!usuario) return;
-
-    switch (usuario.rol) {
-      case 'SUPERADMIN':
-        this.router.navigate(['/gestor-usuarios']);
-        break;
-      case 'ADMIN':
-        this.router.navigate(['/usuarios']); // o el panel de admin correspondiente
-        break;
-      default:
-        this.router.navigate(['/movimientos']);
-    }
+irAPanel() {
+  const usuario = this.authService.usuario();
+  if (!usuario) {
+    alert('Debes iniciar sesión primero');
+    this.router.navigate(['/login']);
+    return;
   }
+
+  // ✅ Comprobar suscripción
+  if (!this.authService.tieneSuscripcionActiva()) {
+    alert('Debes adquirir un plan para acceder a este módulo');
+    this.router.navigate(['/plans']); // Redirige al apartado de planes
+    return;
+  }
+
+  // Navegación según rol
+  switch (usuario.rol) {
+    case 'SUPERADMIN':
+      this.router.navigate(['/gestor-usuarios']);
+      break;
+    case 'ADMIN':
+      this.router.navigate(['/usuarios']); // o el panel de admin correspondiente
+      break;
+    default:
+      this.router.navigate(['/movimientos']);
+  }
+}
+
   
   get mostrarBotonPanel(): boolean {
     // Rutas públicas

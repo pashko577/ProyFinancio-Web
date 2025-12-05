@@ -52,15 +52,13 @@
     </div>
   </div>
 </section>
-
-<!-- MODAL SUSCRIPCIÓN + PAGO -->
 <div class="modal" *ngIf="mostrarModal">
   <div class="modal-contenido">
     <span class="cerrar" (click)="cerrarModal()">&times;</span>
     <h3>Suscribirse al Plan {{ planSeleccionado }}</h3>
 
     <!-- FORMULARIO SUSCRIPCIÓN -->
-    <form (ngSubmit)="enviarFormulario()" *ngIf="!mostrarPago">
+    <form *ngIf="!mostrarPago" (ngSubmit)="enviarFormulario()">
       <label>Nombre completo:</label>
       <input type="text" [(ngModel)]="nombre" name="nombre" required>
 
@@ -73,11 +71,18 @@
       <button type="submit">Registrar Suscripción</button>
     </form>
 
-    <!-- FORMULARIO PAGO YAPE -->
-    <form *ngIf="mostrarPago" (ngSubmit)="enviarPago()">
-      <label>Monto</label>
-      <input type="number" [(ngModel)]="montoPago" name="monto" readonly>
+<!-- BOTÓN PARA INICIAR PAGO CON YAPE -->
+<div *ngIf="mostrarPago">
+  <p>Monto a pagar: S/{{ montoPago }}</p>
 
+  <!-- Mostrar botón solo si no se ha iniciado el pago -->
+  <button *ngIf="!pagoIniciado" (click)="iniciarPagoYape()">Pagar con Yape</button>
+
+  <!-- Mostrar QR y formulario solo si el pago ya se inició -->
+  <div *ngIf="pagoIniciado">
+    <img [src]="qrYape" alt="QR de Yape" style="max-width: 200px; margin-bottom: 10px;">
+    
+    <form (ngSubmit)="enviarPagoYape()">
       <label>Código de Operación (Yape)</label>
       <input type="text" [(ngModel)]="codigoOperacion" name="codigoOperacion" required>
 
@@ -86,8 +91,6 @@
 
       <button type="submit">Enviar Pago</button>
     </form>
-
-    <!-- Mensaje de éxito -->
-    <p *ngIf="enviado">✅ {{ mensajeRespuesta }}</p>
   </div>
 </div>
+

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String nombre;
 
@@ -32,6 +32,9 @@ public class Usuario {
 
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
+
+    @Column(name = "suscripcion_activa")
+private Boolean suscripcionActiva= false; // false por defecto
 
     @PrePersist
     public void prePersist() {

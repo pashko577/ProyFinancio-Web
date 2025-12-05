@@ -24,10 +24,9 @@ public class SuscripcionService {
     private final JavaMailSender mailSender;
 
     public Suscripcion registrarSuscripcion(SuscripcionRequest request) {
-
-        Plan plan = planRepo.findById(request.getIdPlan())
+        Long idPlan = request.getIdPlan().longValue();
+        Plan plan = planRepo.findById(idPlan)
                 .orElseThrow(() -> new RuntimeException("Plan no encontrado"));
-
         Suscripcion s = Suscripcion.builder()
                 .plan(plan)
                 .nombreCliente(request.getNombreCliente())
@@ -41,7 +40,7 @@ public class SuscripcionService {
         Suscripcion suscripcionGuardada = repo.save(s);
 
         // Envío del correo
-        enviarCorreoConfirmacion(suscripcionGuardada);
+        // enviarCorreoConfirmacion(suscripcionGuardada); //desactivar
 
         return suscripcionGuardada;
     }
@@ -56,9 +55,9 @@ public class SuscripcionService {
         mensaje.setSubject("Confirmación de Suscripción");
         mensaje.setText(
                 "Hola " + suscripcion.getNombreCliente() + ",\n\n" +
-                "Tu suscripción al plan '" + suscripcion.getPlan().getNombre() + "' ha sido registrada correctamente.\n" +
-                "Gracias por confiar en nosotros.\n\nFinancio"
-        );
+                        "Tu suscripción al plan '" + suscripcion.getPlan().getNombre()
+                        + "' ha sido registrada correctamente.\n" +
+                        "Gracias por confiar en nosotros.\n\nFinancio");
 
         mailSender.send(mensaje);
     }

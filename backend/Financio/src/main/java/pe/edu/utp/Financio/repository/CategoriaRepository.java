@@ -11,8 +11,8 @@ import java.util.List;
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 
     
-    List<Categoria> findByUsuario_IdAndTipo(Integer idUsuario, String tipo);
+    List<Categoria> findByUsuario_IdAndTipo(Long idUsuario, String tipo);
 
     // Verificar existencia de una categoría para un usuario
-    boolean existsByUsuario_IdAndNombreAndTipo(Integer idUsuario, String nombre, String tipo);
+    boolean existsByUsuario_IdAndNombreAndTipo(Long idUsuario, String nombre, String tipo);
 }

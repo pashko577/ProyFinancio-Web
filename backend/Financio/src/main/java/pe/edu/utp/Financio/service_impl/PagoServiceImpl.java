@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import pe.edu.utp.Financio.Service.PagoService;
 import pe.edu.utp.Financio.entity.Pago;
 import pe.edu.utp.Financio.entity.Suscripcion;
+import pe.edu.utp.Financio.entity.Usuario;
 import pe.edu.utp.Financio.repository.PagoRepository;
 import pe.edu.utp.Financio.repository.SuscripcionRepository;
+import pe.edu.utp.Financio.repository.UsuarioRepository;
 
 @Service
 public class PagoServiceImpl implements PagoService {
@@ -41,20 +43,29 @@ public class PagoServiceImpl implements PagoService {
         return pagoRepository.save(pago);
     }
 
-    @Override
-    public Pago aprobarPago(Long idPago) {  
-        Pago pago = pagoRepository.findById(idPago)
-                .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
+@Autowired
+private UsuarioRepository usuarioRepository;
 
-        pago.setEstado("VALIDADO");
+@Override
+public Pago aprobarPago(Long idPago) {  
+    Pago pago = pagoRepository.findById(idPago)
+            .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
 
-        // Activar suscripción
-        Suscripcion sus = pago.getSuscripcion();
-        sus.setEstado("ACTIVA");
-        suscripcionRepository.save(sus);
+    pago.setEstado("VALIDADO");
 
-        return pagoRepository.save(pago);
-    }
+    // Activar suscripción
+    Suscripcion sus = pago.getSuscripcion();
+    sus.setEstado("ACTIVA");
+    suscripcionRepository.save(sus);
+
+    // Activar usuario
+    Usuario usuario = sus.getUsuario();
+    usuario.setSuscripcionActiva(true);
+    usuarioRepository.save(usuario);
+
+    return pagoRepository.save(pago);
+}
+
 
     @Override
     public Pago obtenerPagoPorId(Long id) {
