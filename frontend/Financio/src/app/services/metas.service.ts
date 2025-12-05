@@ -34,11 +34,7 @@ export class MetasService {
 
     return this.http.post<Meta>(this.apiUrl, metaEnvio);
   }
-  //ahorro
-  agregarAhorro(idMeta: string, monto: number): Observable<Meta> {
-    return this.http.put<Meta>(`${this.apiUrl}/${idMeta}/acumulado?monto=${monto}`, {});
-  }
-
+ 
   desactivar(idMeta: string): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${idMeta}/desactivar`, {});
   }
