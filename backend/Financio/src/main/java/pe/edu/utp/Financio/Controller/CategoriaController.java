@@ -22,7 +22,7 @@ public class CategoriaController {
 
 @GetMapping("/usuario/{idUsuario}/{tipo}")
 public ResponseEntity<List<Categoria>> listarPorUsuarioYTipo(
-        @PathVariable int idUsuario,
+        @PathVariable Long idUsuario,
         @PathVariable String tipo
 ) {
     return ResponseEntity.ok(
@@ -32,7 +32,7 @@ public ResponseEntity<List<Categoria>> listarPorUsuarioYTipo(
 
     @GetMapping("/existe")
     public boolean existeCategoria(
-            @RequestParam int idUsuario,
+            @RequestParam Long idUsuario,
             @RequestParam String nombre,
             @RequestParam String tipo) {
         return categoriaService.existeCategoria(idUsuario, nombre, tipo);

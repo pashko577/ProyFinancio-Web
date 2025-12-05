@@ -7,4 +7,5 @@ export interface Usuario {
   contrasena: string;      // coincide con el nombre exacto del campo JSON
   rol?: string;
   fechaRegistro?: string; 
+  suscripcionActiva?: boolean; // true si compró y validó un plan
 }

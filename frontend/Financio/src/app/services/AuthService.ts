@@ -4,7 +4,13 @@ import { Usuario } from '../models/usuario.model';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private STORAGE_KEY = 'usuario';
-  usuario: WritableSignal<Usuario | null> = signal(this.obtenerUsuario());
+usuario: WritableSignal<Usuario | null> = signal(null);
+
+constructor() {
+  const user = this.obtenerUsuario();
+  if (user) this.usuario.set(user);
+}
+
 
   guardarUsuario(usuario: Usuario) {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(usuario));
@@ -23,5 +29,9 @@ export class AuthService {
 
   obtenerRol(): string | null {
     return this.usuario()?.rol ?? null;
+  }
+
+  tieneSuscripcionActiva(): boolean {
+    return this.usuario()?.suscripcionActiva ?? false;
   }
 }

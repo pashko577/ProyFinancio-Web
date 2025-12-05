@@ -8,7 +8,7 @@ import pe.edu.utp.Financio.entity.Usuario;
 import java.util.Optional;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 Optional<Usuario> findByDniOrCorreo(String dni, String correo);
    Optional<Usuario> findByDni(String dni);
 

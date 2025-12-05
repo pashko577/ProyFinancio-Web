@@ -16,51 +16,32 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
     @Autowired
     private CategoriaService categoriaService;
 
     @Override
     public Usuario registrar(Usuario usuario) {
-        // Validación
-        Optional<Usuario> existente = usuarioRepository.findByDniOrCorreo(
-                usuario.getDni(),
-                usuario.getCorreo());
-
+        Optional<Usuario> existente = usuarioRepository.findByDniOrCorreo(usuario.getDni(), usuario.getCorreo());
         if (existente.isPresent()) {
             throw new RuntimeException("El usuario ya está registrado");
         }
 
-        // Encriptar contraseña
         String hash = BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt());
         usuario.setContrasena(hash);
 
-        // Asignar rol
         long totalUsuarios = usuarioRepository.count();
         usuario.setRol(totalUsuarios == 0 ? "ADMIN" : "EMPLEADO");
 
-        // Guardar usuario
         Usuario nuevoUsuario = usuarioRepository.save(usuario);
 
-        // 🔹 Asignar categorías por defecto
         categoriaService.asignarCategoriasPorDefecto(nuevoUsuario);
-
         return nuevoUsuario;
     }
 
-    // ✅ Nuevo método para asignar rol ADMIN
-    public Optional<Usuario> asignarRolAdmin(Integer idUsuario) {
-        Optional<Usuario> opt = usuarioRepository.findById(idUsuario);
-        if (opt.isPresent()) {
-            Usuario usuario = opt.get();
-            usuario.setRol("ADMIN");
-            return Optional.of(usuarioRepository.save(usuario));
-        }
-        return Optional.empty();
-    }
-
     @Override
-    public Optional<Usuario> buscarPorDni(String dni) {
-        return usuarioRepository.findByDni(dni);
+    public Optional<Usuario> obtenerPorId(Long id) {
+        return usuarioRepository.findById(id);
     }
 
     @Override
@@ -69,7 +50,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public boolean eliminar(int id) {
+    public boolean eliminar(Long id) {
         if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);
             return true;
@@ -83,13 +64,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
             if (BCrypt.checkpw(contrasena, usuario.getContrasena())) {
-
                 // Asignar categorías si aún no tiene
                 if (categoriaService.listarPorUsuarioYTipo(usuario.getId(), "INGRESO").isEmpty() &&
                         categoriaService.listarPorUsuarioYTipo(usuario.getId(), "GASTO").isEmpty()) {
                     categoriaService.asignarCategoriasPorDefecto(usuario);
                 }
-
                 return Optional.of(usuario);
             }
         }
@@ -105,21 +84,31 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Optional<Usuario> obtenerPorId(int id) {
-        return usuarioRepository.findById(id);
+    public Optional<Usuario> asignarRolAdmin(Long idUsuario) {
+        return usuarioRepository.findById(idUsuario)
+                .map(u -> {
+                    u.setRol("ADMIN");
+                    return usuarioRepository.save(u);
+                });
     }
-
-    // para superadmin
 
     @Override
-    public Optional<Usuario> asignarRolSuperadmin(Integer idUsuario) {
-        Optional<Usuario> opt = usuarioRepository.findById(idUsuario);
-
-        if (opt.isPresent()) {
-            Usuario usuario = opt.get();
-            usuario.setRol("SUPERADMIN");
-            return Optional.of(usuarioRepository.save(usuario));
-        }
-        return Optional.empty();
+    public Optional<Usuario> asignarRolSuperadmin(Long idUsuario) {
+        return usuarioRepository.findById(idUsuario)
+                .map(u -> {
+                    u.setRol("SUPERADMIN");
+                    return usuarioRepository.save(u);
+                });
     }
+
+    @Override
+    public Usuario guardar(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public Optional<Usuario> buscarPorDni(String dni) {
+        return usuarioRepository.findByDni(dni);
+    }
+
 }

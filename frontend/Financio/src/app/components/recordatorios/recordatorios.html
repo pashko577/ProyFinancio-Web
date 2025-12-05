@@ -1,0 +1,18 @@
+<h2>⏰ Recordatorios</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mensaje</th>
+      <th>Fecha de recordatorio</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of recordatorios">
+      <td>{{ r.mensaje }}</td>
+      <td>{{ r.fechaRecordatorio | date:'dd/MM/yyyy' }}</td>
+      <td>{{ r.enviado ? '✅ Enviado' : '⏳ Pendiente' }}</td>
+    </tr>
+  </tbody>
+</table>

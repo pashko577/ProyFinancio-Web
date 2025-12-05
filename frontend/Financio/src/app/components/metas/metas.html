@@ -1,8 +1,25 @@
+<h2 class="titulo">⏰ Recordatorios</h2>
+
+<div *ngIf="recordatorios.length > 0" class="panel-recordatorios">
+  <ul>
+    <li *ngFor="let r of recordatorios">
+      {{ r.mensaje }} (Fecha límite: {{ r.fechaMeta | date:'dd/MM/yyyy' }})
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="recordatorios.length === 0" class="panel-recordatorios-vacio">
+  No hay recordatorios pendientes.
+</div>
+
+<hr>
+
 <h2 class="titulo">🎯 Metas</h2>
 
 <!-- Mensaje de estado -->
 <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
 
+<!-- Formulario para nueva meta -->
 <div class="tarjeta">
   <label>Nombre de la Meta</label>
   <input type="text" [(ngModel)]="nuevaMeta.nombreMeta" placeholder="Ej: Ahorro para viaje">
@@ -21,6 +38,7 @@
 
 <hr>
 
+<!-- Tabla de metas -->
 <table class="tabla">
   <thead>
     <tr>

@@ -37,27 +37,32 @@ public class UsuarioController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Usuario credenciales) {
-        Optional<Usuario> usuarioOpt = usuarioService.login(
-                credenciales.getDni(),
-                credenciales.getContrasena());
+ @PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody Usuario credenciales) {
+    Optional<Usuario> usuarioOpt = usuarioService.login(
+            credenciales.getDni(),
+            credenciales.getContrasena());
 
-        if (usuarioOpt.isPresent()) {
-            Usuario usuario = usuarioOpt.get();
+    if (usuarioOpt.isPresent()) {
+        Usuario usuario = usuarioOpt.get();
 
-            // ✅ Solo enviamos datos seguros al frontend
-            return ResponseEntity.ok(Map.of(
-                    "id", usuario.getId(),
-                    "nombre", usuario.getNombre(),
-                    "dni", usuario.getDni(),
-                    "rol", usuario.getRol()));
-        } else {
-            // ❌ Credenciales incorrectas
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("mensaje", "Credenciales incorrectas"));
-        }
+        return ResponseEntity.ok(Map.of(
+                "id", usuario.getId(),
+                "nombre", usuario.getNombre(),
+                "dni", usuario.getDni(),
+                "correo", usuario.getCorreo(),
+                "telefono", usuario.getTelefono(),
+                "rol", usuario.getRol(),
+                "suscripcionActiva",
+                    usuario.getSuscripcionActiva() != null ?
+                            usuario.getSuscripcionActiva() : false
+        ));
+    } else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("mensaje", "Credenciales incorrectas"));
     }
+}
+
 
     @GetMapping("/admin")
     public ResponseEntity<?> obtenerAdmin() {
@@ -68,7 +73,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable int id) {
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         if (usuarioService.eliminar(id)) {
             return ResponseEntity.noContent().build();
         }
@@ -76,7 +81,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/admin/{id}")
-    public ResponseEntity<?> asignarRolAdmin(@PathVariable int id) {
+    public ResponseEntity<?> asignarRolAdmin(@PathVariable Long id) {
         Optional<Usuario> usuarioOpt = usuarioService.asignarRolAdmin(id);
         if (usuarioOpt.isPresent()) {
             return ResponseEntity.ok(usuarioOpt.get());
@@ -87,28 +92,28 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-public ResponseEntity<?> obtenerPorId(@PathVariable int id) {
-    Optional<Usuario> usuarioOpt = usuarioService.obtenerPorId(id);
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+        Optional<Usuario> usuarioOpt = usuarioService.obtenerPorId(id);
 
-    if (usuarioOpt.isPresent()) {
-        return ResponseEntity.ok(usuarioOpt.get());
-    } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("mensaje", "Usuario no encontrado"));
+        if (usuarioOpt.isPresent()) {
+            return ResponseEntity.ok(usuarioOpt.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("mensaje", "Usuario no encontrado"));
+        }
     }
-}
 
-//endpoint para superadmin
-@PutMapping("/superadmin/{id}")
-public ResponseEntity<?> asignarRolSuperadmin(@PathVariable int id) {
-    Optional<Usuario> usuarioOpt = usuarioService.asignarRolSuperadmin(id);
+    // endpoint para superadmin
+    @PutMapping("/superadmin/{id}")
+    public ResponseEntity<?> asignarRolSuperadmin(@PathVariable Long id) {
+        Optional<Usuario> usuarioOpt = usuarioService.asignarRolSuperadmin(id);
 
-    if (usuarioOpt.isPresent()) {
-        return ResponseEntity.ok(usuarioOpt.get());
-    } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("mensaje", "Usuario no encontrado"));
+        if (usuarioOpt.isPresent()) {
+            return ResponseEntity.ok(usuarioOpt.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("mensaje", "Usuario no encontrado"));
+        }
     }
-}
 
 }

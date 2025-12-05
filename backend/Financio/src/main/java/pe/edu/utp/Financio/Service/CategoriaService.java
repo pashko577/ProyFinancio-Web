@@ -10,9 +10,9 @@ public interface CategoriaService {
     
     Categoria registrar(Categoria categoria);
 
-    List<Categoria> listarPorUsuarioYTipo(Integer idUsuario, String tipo);
+    List<Categoria> listarPorUsuarioYTipo(Long idUsuario, String tipo);
 
-    boolean existeCategoria(Integer idUsuario, String nombre, String tipo);
+    boolean existeCategoria(Long idUsuario, String nombre, String tipo);
 
     Optional<Categoria> buscarPorId(Integer id);
 

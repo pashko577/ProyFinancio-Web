@@ -33,15 +33,16 @@ export class Login {
 
     this.usuarioService.login(this.dni, this.contrasena).subscribe({
       next: (res: any) => {
-        const usuario: Usuario = {
-          id: res.id,
-          nombre: res.nombre,
-          dni: res.dni,
-          correo: res.correo,
-          telefono: res.telefono,
-          contrasena: '',
-          rol: res.rol
-        };
+  const usuario: Usuario = {
+  id: res.id,
+  nombre: res.nombre,
+  dni: res.dni,
+  correo: res.correo ?? "",
+  telefono: res.telefono ?? "",
+  contrasena: '',
+  rol: res.rol,
+  suscripcionActiva: res.suscripcionActiva === true,
+};
 
         // Guarda en AuthService → actualiza navbar automáticamente
         this.authService.guardarUsuario(usuario);

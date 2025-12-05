@@ -7,6 +7,7 @@ public interface MetaService {
     Meta registrar(Meta meta);
     List<Meta> listarActivasPorUsuario(int idUsuario);
     Meta actualizarAcumulado(String idMeta, double monto);
+    Meta actualizarAcumuladoTotal(String idMeta, double total); // nuevo método
     void desactivarSiCumplida(String idMeta);
     void eliminar(String idMeta);
 
