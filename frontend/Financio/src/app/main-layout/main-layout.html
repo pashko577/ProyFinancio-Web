@@ -1,12 +1,17 @@
-<!-- === LAYOUT COMPLETO SOLO SI NO ES SUPERADMIN === -->
-<div class="layout" *ngIf="!esSuperadmin">
+<!-- Botón hamburguesa solo en móviles -->
+<div class="hamburger" (click)="toggleSidebar()" *ngIf="!esSuperadmin">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 
+<!-- Layout completo solo si no es Superadmin -->
+<div class="layout" [class.sidebar-open]="sidebarAbierto" *ngIf="!esSuperadmin">
+  
   <!-- Sidebar -->
   <aside class="sidebar">
     <h2>Financio</h2>
-
     <nav>
-      <!-- Enlaces visibles para todos -->
       <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       <a routerLink="/ingresos" routerLinkActive="active">Ingresos</a>
       <a routerLink="/gastos" routerLinkActive="active">Gastos</a>
@@ -14,11 +19,7 @@
       <a routerLink="/caja" routerLinkActive="active">Caja</a>
       <a routerLink="/metas" routerLinkActive="active">Metas</a>
       <a routerLink="/exportar" routerLinkActive="active">Exportar Datos</a>
-
-      <!-- Solo visible para ADMIN -->
       <a *ngIf="rol === 'ADMIN'" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
-
-      <!-- Cerrar sesión -->
       <a (click)="abrirModal()">Cerrar sesión</a>
     </nav>
   </aside>
@@ -29,14 +30,12 @@
   </main>
 </div>
 
-
-<!-- === SOLO CONTENIDO PARA SUPERADMIN === -->
+<!-- Contenido solo para Superadmin -->
 <div *ngIf="esSuperadmin" class="content">
   <router-outlet></router-outlet>
 </div>
 
-
-<!-- MODAL CONFIRMACIÓN -->
+<!-- Modal de confirmación -->
 <div class="modal-overlay" *ngIf="mostrarModal">
   <div class="modal-box">
     <h3>¿Deseas cerrar sesión?</h3>

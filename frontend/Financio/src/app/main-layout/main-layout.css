@@ -1,18 +1,22 @@
+/* === LAYOUT GENERAL === */
 .layout {
   display: flex;
   height: 100vh;
   font-family: Arial, sans-serif;
 }
 
-/* Sidebar */
+/* === SIDEBAR === */
 .sidebar {
   width: 220px;
   background-color: #2c3e50;
   color: #fff;
   padding: 20px;
   display: flex;
-  flex-direction: column; /* 🔹 columna */
-  gap: 10px; /* espacio entre enlaces */
+  flex-direction: column; /* siempre vertical */
+  gap: 10px;
+  transition: left 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto; /* scroll vertical si hay muchos enlaces */
 }
 
 .sidebar h2 {
@@ -21,7 +25,8 @@
 
 .sidebar nav {
   display: flex;
-  flex-direction: column; /* 🔹 enlaces en columna */
+  flex-direction: column; /* enlaces verticales */
+  gap: 10px;
 }
 
 .sidebar nav a {
@@ -39,22 +44,20 @@
   color: #fff;
 }
 
-/* Contenido principal */
+/* === CONTENIDO PRINCIPAL === */
 .content {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
   background-color: #f4f6f9;
+  transition: margin-left 0.3s ease;
 }
 
-
-/*cerrar sesion*/
+/* === MODAL DE CIERRE DE SESIÓN === */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: rgba(0,0,0,0.55);
   display: flex;
   justify-content: center;
@@ -68,13 +71,13 @@
   padding: 22px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0px 4px 18px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.25);
   animation: fadeIn 0.25s ease-out;
 }
 
 .modal-box h3 {
-  font-weight: 600;
   margin-bottom: 8px;
+  font-weight: 600;
 }
 
 .modal-actions {
@@ -92,17 +95,84 @@
   font-weight: 600;
 }
 
-.btn-cancel {
-  background: #bfbfbf;
-}
-
-.btn-logout {
-  background: #d62828;
-  color: white;
-}
+.btn-cancel { background: #bfbfbf; }
+.btn-logout { background: #d62828; color: white; }
 
 @keyframes fadeIn {
   from { transform: scale(0.9); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
+/* === RESPONSIVE LAYOUT === */
+@media (max-width: 1024px) {
+  .layout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    width: 220px; /* fijo ancho vertical */
+    flex-direction: column;
+    overflow-y: auto; /* scroll vertical */
+  }
+
+  .sidebar nav {
+    flex-direction: column;
+  }
+
+  .content {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Sidebar móvil colapsable */
+  .sidebar {
+    position: fixed;
+    left: -220px; /* fuera de pantalla */
+    top: 0;
+    height: 100%;
+    width: 220px;
+    padding: 20px;
+    background-color: #2c3e50;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.show,
+  .layout.sidebar-open .sidebar {
+    left: 0; /* al abrir sidebar */
+  }
+
+  .content {
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+  }
+
+  .layout.sidebar-open .content {
+    margin-left: 220px;
+  }
+
+  /* Botón hamburguesa */
+  .hamburger {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1100;
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .hamburger span {
+    display: block;
+    height: 4px;
+    width: 100%;
+    background: #2c3e50;
+    border-radius: 2px;
+  }
+}

@@ -12,43 +12,35 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./main-layout.css']
 })
 export class MainLayout implements OnInit {
-
-  mostrarModal = false; // Para el modal de cierre de sesión
+  mostrarModal = false; 
   rol: string = '';
   nombreUsuario: string = '';
+  sidebarAbierto = false; // ✅ Estado sidebar móvil
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-  const usuario = this.authService.obtenerUsuario();
-  this.rol = usuario?.rol || '';
-  this.nombreUsuario = usuario?.nombre || '';
-}
-
-  abrirModal(): void {
-    this.mostrarModal = true;
+    const usuario = this.authService.obtenerUsuario();
+    this.rol = usuario?.rol || '';
+    this.nombreUsuario = usuario?.nombre || '';
   }
 
-  cerrarModal(): void {
-    this.mostrarModal = false;
-  }
-
-  cerrarSesion(): void {
+  abrirModal(): void { this.mostrarModal = true; }
+  cerrarModal(): void { this.mostrarModal = false; }
+  cerrarSesion(): void { 
     this.authService.cerrarSesion();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']); 
   }
 
-  // ✅ Aquí va el nuevo método
+  toggleSidebar(): void {
+    this.sidebarAbierto = !this.sidebarAbierto;
+  }
+
   irAPanel(): void {
-    if (this.rol === 'SUPERADMIN') {
-      this.router.navigate(['/gestor-usuarios']);
-    } else if (this.rol === 'ADMIN') {
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.router.navigate(['/movimientos']);
-    }
+    if (this.rol === 'SUPERADMIN') this.router.navigate(['/gestor-usuarios']);
+    else if (this.rol === 'ADMIN') this.router.navigate(['/dashboard']);
+    else this.router.navigate(['/movimientos']);
   }
-  get esSuperadmin(): boolean {
-    return this.rol === 'SUPERADMIN';
-  }
+
+  get esSuperadmin(): boolean { return this.rol === 'SUPERADMIN'; }
 }

@@ -40,7 +40,7 @@ public class SuscripcionService {
         Suscripcion suscripcionGuardada = repo.save(s);
 
         // Envío del correo
-        // enviarCorreoConfirmacion(suscripcionGuardada); //desactivar
+         enviarCorreoConfirmacion(suscripcionGuardada); //desactivar
 
         return suscripcionGuardada;
     }

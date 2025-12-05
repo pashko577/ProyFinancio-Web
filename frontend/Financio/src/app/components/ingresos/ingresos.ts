@@ -37,26 +37,26 @@ export class Ingresos implements OnInit {
   ) { }
 
   // ✅ CARGA PRINCIPAL
-ngOnInit(): void {
-  const usuario = this.authService.obtenerUsuario();
+  ngOnInit(): void {
+    const usuario = this.authService.obtenerUsuario();
 
-  if (!usuario || !usuario.id) {
-    this.mensaje = '⚠️ No hay usuario autenticado.';
-    return;
+    if (!usuario || !usuario.id) {
+      this.mensaje = '⚠️ No hay usuario autenticado.';
+      return;
+    }
+
+    // 1) Cargar categorías
+    this.categoriasService.getCategoriasPorUsuarioYTipo(usuario.id, "INGRESO").subscribe({
+      next: categorias => {
+        this.categorias = categorias;
+
+        // ✅ Ahora sí cargar métodos una sola vez
+        this.cargarMetodosPago(Number(usuario.id));
+      },
+      error: err => console.error('❌ Error al cargar categorías:', err)
+    });
+
   }
-
-  // 1) Cargar categorías
-this.categoriasService.getCategoriasPorUsuarioYTipo(usuario.id, "INGRESO").subscribe({
-  next: categorias => {
-    this.categorias = categorias;
-
-    // ✅ Ahora sí cargar métodos una sola vez
-    this.cargarMetodosPago(Number(usuario.id));
-  },
-  error: err => console.error('❌ Error al cargar categorías:', err)
-});
-
-}
 
 
   // ✅ Cargar métodos de pago por usuario (OBLIGATORIO)
@@ -101,7 +101,7 @@ this.categoriasService.getCategoriasPorUsuarioYTipo(usuario.id, "INGRESO").subsc
   // ✅ Registrar ingreso
   registrarIngreso(): void {
     console.log("✅ Categoria enviada:", this.nuevoIngreso.categoria);
-console.log("✅ MetodoPago enviado:", this.nuevoIngreso.metodoPago);
+    console.log("✅ MetodoPago enviado:", this.nuevoIngreso.metodoPago);
 
     const usuario = this.authService.obtenerUsuario();
 
@@ -114,8 +114,8 @@ console.log("✅ MetodoPago enviado:", this.nuevoIngreso.metodoPago);
       descripcion: this.nuevoIngreso.descripcion,
       monto: this.nuevoIngreso.monto,
       categoria: { id: Number(this.nuevoIngreso.categoria) },
-      metodoPago: { id: Number(this.nuevoIngreso.metodoPago) },
-      usuario: { id: usuario.id },  // ✅ CORRECTO
+      metodoPago: { id: this.nuevoIngreso.metodoPago }, // ya es number
+      usuario: { id: usuario.id },
       tipo: 'INGRESO'
     };
 

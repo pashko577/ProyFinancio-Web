@@ -9,12 +9,24 @@
           [(ngModel)]="nuevoIngreso.categoria" name="categoria" required>
           <option value="" disabled selected>Seleccione categoría</option>
           <option *ngFor="let c of categorias" [value]="c.id">{{ c.nombre }}</option>
-        </select> </div> <!-- Método de Pago -->
-      <div class="mb-3"> <label class="form-label fw-semibold">Método de Pago</label> <select class="form-select"
+        </select> </div>
+         <!-- Método de Pago -->
+
+<!--       <div class="mb-3"> <label class="form-label fw-semibold">Método de Pago</label> <select class="form-select"
           [(ngModel)]="nuevoIngreso.metodoPago" name="metodoPago" required>
           <option value="" disabled selected>Seleccione método de pago</option>
           <option *ngFor="let m of metodosPago" [value]="m.id">{{ m.tipo }}</option>
-        </select> </div> <!-- Descripción -->
+        </select> </div> 
+         -->
+        <div class="mb-3">
+  <label class="form-label fw-semibold">Método de Pago</label>
+  <select class="form-select" [(ngModel)]="nuevoIngreso.metodoPago" name="metodoPago" required>
+    <option [ngValue]="null" disabled selected>Seleccione método de pago</option>
+    <option *ngFor="let m of metodosPago" [ngValue]="m.id">{{ m.tipo }}</option>
+  </select>
+</div>
+
+        <!-- Descripción -->
       <div class="mb-3"> <label class="form-label fw-semibold">Descripción</label> <textarea
           class="form-control descripcion-input" placeholder="Ej: Pago por servicio, venta del día, etc..."
           [(ngModel)]="nuevoIngreso.descripcion" name="descripcion" rows="4" required></textarea> </div> <button
