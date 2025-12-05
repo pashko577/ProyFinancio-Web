@@ -1,0 +1,25 @@
+<div class="container mt-4">
+
+  <h2 class="text-center mb-4">🛠 SuperAdmin Panel</h2>
+
+  <!-- Botones de navegación -->
+  <div class="d-flex justify-content-center mb-4">
+    <button class="btn btn-primary me-2" 
+            [class.active]="moduloActivo==='usuarios'" 
+            (click)="mostrarModulo('usuarios')">
+      👤 Gestor de Usuarios
+    </button>
+    <button class="btn btn-success" 
+            [class.active]="moduloActivo==='pagos'" 
+            (click)="mostrarModulo('pagos')">
+      💰 Gestor de Pagos
+    </button>
+  </div>
+
+  <!-- Contenedor de módulos -->
+  <div class="modulo-container">
+    <app-gestor-usuarios *ngIf="moduloActivo === 'usuarios'"></app-gestor-usuarios>
+    <app-gestor-pagos *ngIf="moduloActivo === 'pagos'"></app-gestor-pagos>
+  </div>
+
+</div>

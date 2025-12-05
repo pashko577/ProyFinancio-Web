@@ -17,12 +17,14 @@ export class MainLayout implements OnInit {
   nombreUsuario: string = '';
   sidebarAbierto = false; // ✅ Estado sidebar móvil
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     const usuario = this.authService.obtenerUsuario();
     this.rol = usuario?.rol || '';
     this.nombreUsuario = usuario?.nombre || '';
+
+
   }
 
   abrirModal(): void { this.mostrarModal = true; }

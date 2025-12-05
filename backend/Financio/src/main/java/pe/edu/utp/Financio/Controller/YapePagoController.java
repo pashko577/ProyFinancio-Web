@@ -52,15 +52,15 @@ public ResponseEntity<?> iniciarPago(@RequestBody Map<String, Object> payload) {
                 .plan(plan)
                 .nombreCliente(usuario.getNombre())
                 .correo(usuario.getCorreo())
-                .estado("ACTIVA")  // YA ACTIVAS LA SUSCRIPCIÓN
+                .estado("PENDIENTE")  // YA ACTIVAS LA SUSCRIPCIÓN
                 .build();
 
         suscripcionRepository.save(suscripcion);
 
-        // 🔥 ACTIVAR AL USUARIO TAMBIÉN
+/*         // 🔥 ACTIVAR AL USUARIO TAMBIÉN
         usuario.setSuscripcionActiva(true);
         usuarioService.guardar(usuario);
-
+ */
         return ResponseEntity.ok(Map.of(
                 "idSuscripcion", suscripcion.getId(),
                 "monto", plan.getPrecio(),
@@ -148,12 +148,12 @@ public ResponseEntity<?> confirmarPago(@RequestBody Map<String, Object> payload)
 
         pagoRepository.save(pago);
 
-        // 7️⃣ Activar suscripción y usuario
+   /*      // 7️⃣ Activar suscripción y usuario
         sus.setEstado("ACTIVA");
         suscripcionRepository.save(sus);
 
         usuario.setSuscripcionActiva(true);
-        usuarioService.guardar(usuario);
+        usuarioService.guardar(usuario); */
 
         return ResponseEntity.ok(Map.of(
                 "mensaje", "Pago registrado y suscripción activada",

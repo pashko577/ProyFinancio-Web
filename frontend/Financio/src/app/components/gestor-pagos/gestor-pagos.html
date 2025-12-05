@@ -1,0 +1,52 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">💳 Gestor de Pagos — SUPERADMIN</h2>
+
+  <div *ngIf="mensaje" class="alert alert-info text-center">{{ mensaje }}</div>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Plan</th>
+          <th>Monto</th>
+          <th>Código</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of pagos">
+          <td>{{ p.id }}</td>
+          <td>{{ p.usuario?.nombre }} ({{ p.usuario?.correo }})</td>
+          <td>{{ p.suscripcion?.plan?.nombre }}</td>
+          <td>{{ p.monto | currency:'PEN' }}</td>
+          <td>{{ p.codigoOperacion }}</td>
+          <td>
+            <span class="badge"
+                  [ngClass]="{
+                    'bg-warning text-dark': p.estado === 'PENDIENTE',
+                    'bg-success': p.estado === 'VALIDADO'
+                  }">
+              {{ p.estado }}
+            </span>
+          </td>
+          <td>{{ p.fechaPago | date:'short' }}</td>
+          <td>
+            <button class="btn btn-sm btn-success"
+                    [disabled]="p.estado !== 'PENDIENTE'"
+                    (click)="aprobarPago(p.id)">
+              ✅ Aprobar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="pagos.length === 0" class="text-center text-muted mt-3">
+    No hay pagos registrados aún.
+  </div>
+</div>

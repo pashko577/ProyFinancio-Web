@@ -1,0 +1,14 @@
+.modulo-container {
+  border: 1px solid #dee2e6;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+button.btn {
+  min-width: 160px;
+}
+
+button.btn.active {
+  box-shadow: 0 0 0 0.25rem rgba(0,123,255,.5);
+}

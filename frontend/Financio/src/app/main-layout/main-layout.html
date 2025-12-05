@@ -32,17 +32,39 @@
 
 <!-- Contenido solo para Superadmin -->
 <div *ngIf="esSuperadmin" class="content">
+
+  <!-- Menú superior para SuperAdmin -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/dashboard">💼 Financio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSuperAdmin"
+        aria-controls="navbarSuperAdmin" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSuperAdmin">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/gestor-usuarios" routerLinkActive="active">Gestor Usuarios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/gestor-pagos" routerLinkActive="active">Gestor Pagos</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <span class="navbar-text me-3">{{ authService.obtenerUsuario()?.nombre }}</span>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light btn-sm" (click)="cerrarSesion()">Cerrar sesión</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Aquí van los componentes según la ruta -->
   <router-outlet></router-outlet>
 </div>
 
-<!-- Modal de confirmación -->
-<div class="modal-overlay" *ngIf="mostrarModal">
-  <div class="modal-box">
-    <h3>¿Deseas cerrar sesión?</h3>
-    <p>Se cerrará tu sesión y volverás a la pantalla de inicio.</p>
-    <div class="modal-actions">
-      <button class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
-      <button class="btn-logout" (click)="cerrarSesion()">Sí, cerrar sesión</button>
-    </div>
-  </div>
-</div>

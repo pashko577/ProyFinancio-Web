@@ -19,6 +19,7 @@ import { AdminUser } from './components/admin/adminUser';
 import { SuperAdminGuard } from './components/guards/superadmin.guard';
 import { GestorUsuarios } from './components/gestor-usuarios/gestor-usuarios';
 import { SuscripcionGuard } from './components/guards/suscripcion.guard';
+import { GestorPagos } from './components/gestor-pagos/gestor-pagos';
 
 export const routes: Routes = [
   // 🌐 Rutas públicas
@@ -64,6 +65,7 @@ export const routes: Routes = [
 
       // 🔒 Admin / SuperAdmin
       { path: 'gestor-usuarios', component: GestorUsuarios, canActivate: [SuperAdminGuard] },
+      { path: 'gestor-pagos', component: GestorPagos, canActivate: [SuperAdminGuard] },
       { path: 'usuarios', component: AdminUser, canActivate: [AdminGuard] },
 
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' } // redirige a dashboard por defecto
