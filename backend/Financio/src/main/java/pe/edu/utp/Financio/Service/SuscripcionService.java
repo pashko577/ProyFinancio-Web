@@ -21,9 +21,10 @@ public class SuscripcionService {
 
     private final SuscripcionRepository repo;
     private final PlanRepository planRepo;
-    private final JavaMailSender mailSender; // Inyectar el servicio de correo
+    private final JavaMailSender mailSender;
 
     public Suscripcion registrarSuscripcion(SuscripcionRequest request) {
+
         Plan plan = planRepo.findById(request.getIdPlan())
                 .orElseThrow(() -> new RuntimeException("Plan no encontrado"));
 
@@ -35,29 +36,40 @@ public class SuscripcionService {
                 .estado("PENDIENTE")
                 .fechaSuscripcion(LocalDateTime.now())
                 .build();
-        Suscripcion suscripcionGuardada = repo.save(s);
-        // ✅ Enviar correo de confirmación
 
+        // Guardar en BD
+        Suscripcion suscripcionGuardada = repo.save(s);
+
+        // Envío del correo
         enviarCorreoConfirmacion(suscripcionGuardada);
 
         return suscripcionGuardada;
     }
 
-    // ✅ Agrega este método para listar planes
     public List<Plan> listarPlanes() {
         return planRepo.findAll();
     }
 
-     private void enviarCorreoConfirmacion(Suscripcion suscripcion) {
+    private void enviarCorreoConfirmacion(Suscripcion suscripcion) {
         SimpleMailMessage mensaje = new SimpleMailMessage();
-        mensaje.setTo(suscripcion.getCorreo()); // correo del usuario
-        mensaje.setSubject("Confirmación de suscripción");
+        mensaje.setTo(suscripcion.getCorreo());
+        mensaje.setSubject("Confirmación de Suscripción");
         mensaje.setText(
-            "Hola " + suscripcion.getNombreCliente() + ",\n\n" +
-            "Tu suscripción al plan '" + suscripcion.getPlan().getNombre() + "' ha sido registrada correctamente.\n\n" +
-            "Gracias por confiar en nosotros.\n\n" +
-            "Financio"
+                "Hola " + suscripcion.getNombreCliente() + ",\n\n" +
+                "Tu suscripción al plan '" + suscripcion.getPlan().getNombre() + "' ha sido registrada correctamente.\n" +
+                "Gracias por confiar en nosotros.\n\nFinancio"
         );
+
         mailSender.send(mensaje);
+    }
+
+    public Suscripcion obtenerPorId(Long id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Suscripción no encontrada"));
+    }
+
+    public void activarSuscripcion(Suscripcion sus) {
+        sus.setEstado("ACTIVA");
+        repo.save(sus);
     }
 }
